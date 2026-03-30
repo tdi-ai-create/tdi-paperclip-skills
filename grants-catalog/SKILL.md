@@ -77,4 +77,58 @@ This skill gives every TDI agent access to the grant catalog — 39 verified fun
 
 ---
 
-##
+### Maryland-specific
+
+| Grant | Funder | TDI Use Case | Status |
+|---|---|---|---|
+| Maryland Blueprint Compensatory Education | MSDE | Literacy, math PD — PGCPS schools like Allenwood eligible | Active |
+| MSDE Title II-A ESSA Consolidated | MSDE via U.S. DOE | Teacher and para PD — must flow through PGCPS district application | Active |
+| Excellence in Education Foundation PGCPS | EEFPGCPS | Academic programming, teacher support — PGCPS schools only | Active — PGCPS only |
+
+---
+
+### Regional cooperatives — Illinois
+
+| Cooperative | Fiscal Agent | Districts Covered | TDI Use Case |
+|---|---|---|---|
+| Mid-Valley SpEd Cooperative (Kane County) | St. Charles CUSD 303 | Batavia, Kaneland, Central, St. Charles, Geneva | One call to SpEd Director unlocks 5-district reach |
+| Lincoln-Way Area SpEd Joint Agreement (Will County) | Will County | Summit Hill SD 161 and members | Cross-district SpEd para PD |
+
+---
+
+### Autism-specific
+
+| Grant | Funder | TDI Use Case | Status |
+|---|---|---|---|
+| xMinds Educator Grants | xMinds | Classroom tools and training for autism spectrum educators | Check eligibility at xminds.org |
+| IACC Funding Opportunities | Interagency Autism Coordinating Committee | National database — districts with dedicated autism programs | iacc.hhs.gov/funding/opportunities |
+| Community Schools Federal Grant | U.S. DOE | Up to $1M/year | Community school coordinators, wraparound PD | Check grants.gov for current cycle |
+
+---
+
+### Grant search platforms
+
+| Platform | Cost | Best for |
+|---|---|---|
+| Grants.gov | Free | Federal grants — search: special education, professional development, IDEA |
+| Instrumentl | $90+/month | Tracks 30+ active autism grants — updated monthly |
+| GrantWatch | Free/paid | Special education category — filter by IL, IN, WI |
+| OpenGrants | Free | Top SpEd grants including IDEA, SEED, foundation opportunities |
+| GrantsAlert.com | Free/$90/year | Educator-focused — free for smaller grants |
+
+---
+
+## Logging process
+
+Every time a new grant source is identified for any school, Rodrigo logs it to the master CSV. Standard fields: Grant Name, Type, Funder, Funding Range, Deadline Cycle, Eligible School Types, States, TDI Use Case, Current Status, Last Verified.
+
+The TDI Use Case field must be specific — not "supports professional development" but "primary federal lane for para and SpEd PD in districts resistant to Title I."
+
+---
+
+## Flags for Erin Pope
+
+- Grant deadline inside 21 days with no draft in progress → escalate to Elena immediately
+- New grant-to-school match identified → treat as revenue opportunity, same urgency as warm district reply from Jim
+- Grant application ready to submit → routes to Rae's approval queue before submission
+- Closed grant in the catalog → flag to Rodrigo for status update
