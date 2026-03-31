@@ -327,3 +327,5 @@ Know these competitors are in the room at ASU+GSV. If Rae is asked to compare TD
 ---
 
 *Skill document version: March 30, 2026 | TDI GSV Outreach*
+
+Add Jim GSV outreach skill for ASU+GSV 2026
