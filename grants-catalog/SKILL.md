@@ -174,3 +174,45 @@ The goal is not just "win a grant" — it's "win money the school can actually s
 **Added July 9, 2026.**
 
 A school's four-factor score (fit / pain / warmth / funding) sets *priority and approach*, never whether TDI helps. A low funding score does not disqualify a school — it triggers a **creative funding hunt** (local/community sources, braided funding, phased delivery, a smaller start now with a bigger dream contract later). Every interested school gets served; the score only sequences the work and shapes the support. (Full mechanics live in the grant-followup-engine skill.)
+
+---
+
+## Timing & Windows — when each path is (and isn't) an option
+**Added July 9, 2026.**
+
+**Why this matters:** a funding path can be a perfect fit and still be *dead for this year* because its decision window already passed. Before working or nudging any path, check the window. When a window has closed, don't push the closed path — pivot to alternatives (see "If the window's closed" below). Encode real dates per school in the portal's window_opens / window_closes fields; use the typical windows below as the default expectation.
+
+### Federal / formula (Plan A) — the ESSA Consolidated Application
+- **What it governs:** Title II-A, Title I (incl. §1003), Title IV — all ride the district's annual **ESSA Consolidated Application**.
+- **Typical window:** applications open/are worked in **late winter–spring**; preliminary allocations flow in spring; budgets are effectively **set by late spring (≈May–June)**, with amendment/finalization deadlines commonly around **June 1** and hard reconciliation by **August 31**.
+- **Practical closing signal:** once a district has built and submitted its Consolidated App for the year (often by **May**), the window to influence *how that year's formula money is used* has largely closed. This is why "the budget was already decided in May" is common and real.
+- **Critical access fact:** **only the Superintendent can submit the Consolidated Application.** Building-level staff (even a principal) can't. So a school-level contact "sending an email" can nudge intent, but the actual mechanism runs through the district/superintendent — map that route early (this is also the Title II-A district-routing bounce risk).
+- **Best entry timing:** to influence a given school year's formula funds, engage in **winter (Jan–Mar)** before the district finalizes. After ~May, assume the current-year formula window is closing and pivot to next year and/or non-formula sources.
+
+### State / local pathway (Plan B) — e.g., Community Schools budgets, Blueprint
+- **Typical window:** tied to the **district/state spring budget process** — usually decided in **spring for the following school year**. Often closed by **May–June**.
+- **Practical closing signal:** if the district's budget for next year is set, the Community Schools/state line is locked until the next budget cycle.
+
+### Association / competitive (Plan C)
+- **NEA Foundation (Learning & Leadership):** rolling with **three fixed decision cycles per year — typically ~Feb 1, ~Apr 28, ~Sept 15** (verify exact dates each cycle). Miss one, aim for the next. 12-month use window from award; no reimbursement for pre-award expenses.
+- **McCarthey Dressman:** annual cycle with a submission cap; verify open/close each year.
+
+### Corporate / foundation / local (Plan D)
+- **Walmart Spark Good / local community grants:** rolling / quarterly windows — the fastest to enter, least seasonal. Good when formula/budget windows have closed.
+- **Local/community foundations, education foundations, civic orgs:** often rolling or annual with local calendars; frequently the only door still open late in a school year. Relationship-driven, fast.
+
+## If the window's closed — pivot, don't push
+When a primary path's window has passed, do **not** nudge the school to chase it. Instead, probe for still-open alternatives. Useful prompts to the school contact:
+
+- "The district's formula/budget window for this year has likely closed — **do you have access to any Title I carryover or unspent funds** from this year?"
+- "Is there a **school activity fund, principal's discretionary fund, or PTA/PTO budget** we could tap for a smaller start now?"
+- "Are there **local education foundation, community foundation, or business/civic (Rotary, Lions, chamber) funds** open right now?"
+- "Would it help to **line this up for next year's budget cycle** — I can prep everything now so you're first in line when the Consolidated App opens in winter?"
+- "Any **corporate grants (Walmart Spark Good, etc.)** we can move on quickly while the bigger money resets?"
+
+The goal is unchanged: get the school *something* usable this year, and set up the planned January cycle for next year. A closed window is a redirect, never a dead end.
+
+## Rule for the portal window fields
+- Set `window_opens` / `window_closes` per path per school from the real funder/district calendar when known.
+- `window_status`: **open** only when a human has confirmed the path is genuinely still workable this cycle. Default **unknown** — and the follow-up engine will NOT nudge anyone about an `unknown` or closed path (safe default). Verify the window before the engine acts.
+- Federal/state formula paths: default to treating the current-year window as **closing by ~May** unless confirmed otherwise.
