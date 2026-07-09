@@ -132,3 +132,45 @@ The TDI Use Case field must be specific — not "supports professional developme
 - New grant-to-school match identified → treat as revenue opportunity, same urgency as warm district reply from Jim
 - Grant application ready to submit → routes to Rae's approval queue before submission
 - Closed grant in the catalog → flag to Rodrigo for status update
+
+---
+
+## Funding strategy — diversify to protect the timeline
+**Added July 9, 2026.**
+
+The catalog above is the *list* of sources. This is the *strategy* for combining them. Every school's funding plan should deliberately stack sources across speed and size — never let one slow source be the only hope.
+
+**The A/B/C/D tiers (by source type + speed):**
+
+| Plan | Source type | Speed / size | Examples from the catalog |
+|---|---|---|---|
+| **A** | Federal / formula | Slow, big, most competitive, district-routed | Title II-A, Title I §1003, IDEA Part B |
+| **B** | State / local pathway | Medium; district-vehicle dependent | ISBE/MSDE Title II-A, Maryland Blueprint, Community Schools |
+| **C** | Association / competitive | Medium, mid-size, defined cycles | NEA Foundation, McCarthey Dressman |
+| **D** | Corporate / foundation / local | Fast, small, easiest, best-timed | DonorsChoose, EEFPGCPS, local/community funders, regional coops |
+
+**The diversification rule:** always pair a slow Plan A with a fast Plan C/D. A $2–5K NEA or a fast local foundation grant that lands in time beats a large Title II-A that decides too late to spend. The fast sources exist to guarantee *something* lands inside the timeline while the big federal money is still in process. Never build a plan that rides entirely on one slow federal path (this is what caused the Allenwood Title II-A stall — no fast hedge).
+
+---
+
+## Timing model — work backward from usability
+**Added July 9, 2026.**
+
+The goal is not just "win a grant" — it's "win money the school can actually spend this year."
+
+- **North-star target: funds awarded by ~September** so the district gets the full school year of delivery.
+- **Two deadlines per path, not one:**
+  - *Submission real-deadline* = the funder's nominal close − the district's internal processing window − a calendar buffer. This is the date TDI actually works to. The processing window defaults to ~6 weeks when the district-specific figure is unknown, but is **overridable per district** (big districts like PGCPS may need more; small ones less) — capture the real number in the school's money map when known.
+  - *Award-decision-needed-by date* = working backward from when the money must be usable in the Aug–Jun service window. A path can be eligible and submittable but still fail if the decision lands too late to spend.
+- **The ~March current-year cutoff:** for the *current* school year, keep hunting until roughly March — money that confirms as awarded by ~March still leaves enough year to deliver and matter. Past that, defer the path to next year's cycle.
+- **The January next-year cycle:** to fund the *following* fall, the renewal + funding hunt must be in motion by January (fall-usable grants are applied for in winter/spring). Every January, healthy continuing partnerships re-enter the funnel to line up next year's funding.
+- **Keep hunting all year** to fulfill as much of the school's full (dream) contract as possible — September is the target, not a stop point.
+
+*(Compatible with the existing "21 days → escalate to Elena" rule; that's the tactical draft-deadline guard, this is the seasonal frame around it.)*
+
+---
+
+## Serve every interested school (scoring routes, never rejects)
+**Added July 9, 2026.**
+
+A school's four-factor score (fit / pain / warmth / funding) sets *priority and approach*, never whether TDI helps. A low funding score does not disqualify a school — it triggers a **creative funding hunt** (local/community sources, braided funding, phased delivery, a smaller start now with a bigger dream contract later). Every interested school gets served; the score only sequences the work and shapes the support. (Full mechanics live in the grant-followup-engine skill.)
