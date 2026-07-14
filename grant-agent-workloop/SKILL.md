@@ -1,5 +1,6 @@
 # TDI-Grant-Agent-Workloop-Skill
-**Created July 9, 2026. How grant-writer agents (Vanessa, Amara) pick up portal-assigned work via the funding sync API and act on it. Pairs with grant-followup-engine, grants-catalog, and grant-positioning skills.**
+**Created July 9, 2026. Updated July 14, 2026: agents now create Google Docs for narratives.**
+**How grant-writer agents (Vanessa, Amara) pick up portal-assigned work via the funding sync API and act on it. Pairs with grant-followup-engine, grants-catalog, and grant-positioning skills.**
 
 ---
 
@@ -15,10 +16,46 @@ Call the **`find_work`** action with your agent name: GET /api/funding/sync?acti
 An opportunity Bella asked you to draft a grant narrative for. Note: `find_work` only returns draft work for opportunities whose **funding window is verified open** — so if you receive it, the window is confirmed and it's safe to draft.
 
 1. Mark it in progress: `update_opportunity` → set `narrative_status = 'drafting'` (portal shows "Vanessa is drafting…").
+
 2. Draft the narrative to the **Grant Excellence & QA Spec** and **grant-positioning** standards, per line item, using **grants-catalog** knowledge for that funder. Position TDI as an implementation partner, use the funder's trigger phrases, avoid the kill-words.
-3. Push the draft back: `update_narrative` with your drafted content.
-4. Mark ready for review: `update_opportunity` → set `narrative_status = 'review'` (portal shows Bella a "Draft ready — review" + Approve button).
-5. **Stop there.** Do NOT mark it `ready` or send anything to a client. Bella's approval (setting `ready`) and any client send are human-gated in the portal. You draft; Bella approves.
+
+3. **Create a Google Doc** with the narrative:
+   ```
+   POST /api/paperclip/save-to-drive
+   Authorization: Bearer $PAPERCLIP_REPORT_SECRET
+   Content-Type: application/json
+   {
+     "title": "<Grant Name> - <School Name>",
+     "content": "<the narrative, in markdown>",
+     "format": "doc",
+     "folder": "TDI Grant Narratives",
+     "agentName": "<your agent name>"
+   }
+   ```
+   Returns: `{ "success": true, "url": "https://docs.google.com/document/d/.../edit", "title": "...", "folder": "TDI Grant Narratives" }`
+
+   The URL is what Bella and Julie will open, read, and edit. The Doc is the living document.
+
+4. **Push BOTH the URL and the text back** via `update_narrative`:
+   ```
+   POST /api/funding/sync
+   Authorization: Bearer $PAPERCLIP_SYNC_KEY
+   Content-Type: application/json
+   {
+     "action": "update_narrative",
+     "opportunityId": "<opportunity id from find_work>",
+     "narrativeStatus": "review",
+     "narrativeUrl": "<url from save-to-drive>",
+     "narrativeContent": "<plain text of the narrative>",
+     "note": "Draft created as Google Doc by <agent name>"
+   }
+   ```
+
+   **Both fields are required.** `narrativeUrl` is the Google Doc link that Bella opens. `narrativeContent` is the plain-text copy for the portal's inline reader and search. Always send both.
+
+5. **If save-to-drive fails:** still call `update_narrative` with `narrativeContent` alone (no `narrativeUrl`). Include the error in the note: `"Draft saved as text only — Google Doc creation failed: <error>"`. A failed Doc must never mean a lost draft. The portal can still display the inline text, and the Doc can be created later.
+
+6. **Stop there.** Do NOT mark it `ready` or send anything to a client. Bella's approval (setting `ready`) and any client send are human-gated in the portal. You draft; Bella approves.
 
 ### Step 3 — For `request_type: 'research_funders'`
 Bella asked you (Amara) to find more funding sources for a pursuit.
@@ -32,7 +69,8 @@ Bella asked you (Amara) to find more funding sources for a pursuit.
 - **Never** advance a narrative to `ready` — that's Bella's approval.
 - **Never** send anything to a client — all client sends are human-gated in the portal (allowlist + window-gate + Bella's click).
 - **Respect the window-gate:** don't draft for a closed/unknown window (find_work enforces this for you); when researching, default new sources to `window_status='unknown'`.
+- **Always push both URL and text** when creating a Google Doc draft. If the Doc fails, push text alone — never lose the draft.
 - Escalations, approvals, and policy questions → route to Rae (per your existing escalation instructions).
 
 ### The loop in one line
-`find_work(you)` → mark in-progress → do it to spec → push result back → mark ready-for-review → stop. Bella approves; humans send.
+`find_work(you)` → mark in-progress → draft to spec → create Google Doc → push URL + text back → mark review → stop. Bella approves; humans send.
