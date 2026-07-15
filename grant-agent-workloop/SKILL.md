@@ -4,12 +4,23 @@
 
 ---
 
+## Base URL and auth
+
+All API calls go to the TDI website (NOT Paperclip, NOT Railway):
+- **Base URL:** `https://www.teachersdeserveit.com`
+- **Sync API auth:** `Authorization: Bearer $PAPERCLIP_SYNC_KEY`
+- **Drive API auth:** `Authorization: Bearer $PAPERCLIP_REPORT_SECRET`
+
+Both keys are in your company secrets. Every URL below is relative to the base URL above.
+
+---
+
 ## Heartbeat work loop — how to pick up portal-assigned work
 
-On each heartbeat, check the funding portal for work that Bella (or Rae) has assigned to you, do it to standard, and push the result back. The portal and you share one database via the **Funding Sync API** (`/api/funding/sync`, bearer `PAPERCLIP_SYNC_KEY`).
+On each heartbeat, check the funding portal for work that Bella (or Rae) has assigned to you, do it to standard, and push the result back. The portal and you share one database via the **Funding Sync API** (`https://www.teachersdeserveit.com/api/funding/sync`, bearer `PAPERCLIP_SYNC_KEY`).
 
 ### Step 1 — Ask what's assigned to you
-Call the **`find_work`** action with your agent name: GET /api/funding/sync?action=find_work&agent=vanessa
+Call the **`find_work`** action with your agent name: GET https://www.teachersdeserveit.com/api/funding/sync?action=find_work&agent=vanessa
 (Amara uses `&agent=amara`.) It returns only *actionable* work assigned to you, each item tagged with a `request_type`.
 
 ### Step 2 — For `request_type: 'draft_narrative'`
@@ -21,7 +32,7 @@ An opportunity Bella asked you to draft a grant narrative for. Note: `find_work`
 
 3. **Create a Google Doc** with the narrative:
    ```
-   POST /api/paperclip/save-to-drive
+   POST https://www.teachersdeserveit.com/api/paperclip/save-to-drive
    Authorization: Bearer $PAPERCLIP_REPORT_SECRET
    Content-Type: application/json
    {
@@ -38,7 +49,7 @@ An opportunity Bella asked you to draft a grant narrative for. Note: `find_work`
 
 4. **Push BOTH the URL and the text back** via `update_narrative`:
    ```
-   POST /api/funding/sync
+   POST https://www.teachersdeserveit.com/api/funding/sync
    Authorization: Bearer $PAPERCLIP_SYNC_KEY
    Content-Type: application/json
    {
