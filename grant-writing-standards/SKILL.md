@@ -1,116 +1,105 @@
 # TDI Grant Writing Standards
-**Created July 21, 2026. Every narrative must meet these standards before submission.**
+**Updated July 22, 2026. Every application package must meet these standards. No exceptions.**
 
 ---
 
-## The Standard: A+ or Don't Submit
+## What We Deliver
 
-B+ narratives lose to A+ narratives. Every TDI grant narrative must be compelling enough that a reviewer reads it and thinks "we have to fund this school." If your draft doesn't hit that bar, revise it before pushing it back.
+TDI does not send raw narratives to clients. We deliver **complete, ready-to-submit application packages** where the client copies, pastes, and clicks submit. They should never write a word, look up a number, or make a decision.
+
+Every application package includes:
+1. Welcome letter with the client's name and what the grant funds
+2. School credentials listed upfront (NCES, EIN, address, contact)
+3. Step-by-step submission instructions with exact URLs
+4. Pre-written application sections matched to the EXACT form field names
+5. Character counts shown for each section (if the form has limits)
+6. Budget with verified line items tied to TDI contract services
+7. Printable submission checklist
+8. Help contact (Bella's email, call offer)
 
 ---
 
-## Required Elements (every narrative must have ALL of these)
+## Critical Rules
 
-### 1. Specific Dollar-to-Impact Budget Table
-Never say "supplemental materials" or "classroom resources." Say exactly what the money buys:
+### 1. Every Grant Funds TDI Services
+The grant application must fund items from the school's TDI contract: Learning Hub memberships, coaching visits, virtual sessions, executive impact sessions, TDI books. Never invent unrelated budget items like "classroom supplies" or "manipulatives" unless they are part of the TDI service package.
 
-**Wrong:** "This grant will fund classroom resources and professional development materials."
+### 2. Research the Actual Form First
+Before drafting, someone must open the real application form and document every field name, character limit, and required attachment. Never guess at field names. If the form says "Tell us about your project" and we label our section "Project Description," the client has to figure out the mapping. That is not white-glove.
 
-**Right:**
-| Item | Cost | Impact |
-|------|------|--------|
-| 24 guided reading book sets (Levels A-N) | $720 | Serves 6 small groups of 4 students in K-3 |
-| 12 math manipulative kits | $480 | Equips every K-2 classroom |
+### 3. Maximize the Ask
+Always request the maximum amount the grant allows, as long as we can justify it with real TDI contract line items. $5,000 grant? Use all $5,000. Never leave money on the table by asking for less than the maximum.
 
-Every line item must answer: what is it, how much, and who does it reach.
+### 4. The School Is the Applicant
+TDI is always the implementation partner, never the applicant. The narrative should read as the school describing their partnership with TDI, not TDI describing their services.
 
-### 2. Measurable Outcomes Table
-Never say "improve student outcomes." Give baseline numbers and targets:
+### 5. Use Local Data
+School-specific statistics from NCES, state report cards, or district data. Never national averages. Walmart facility managers and NEA reviewers connect with local stories, not abstract numbers.
 
-| Metric | Current | Target |
-|--------|---------|--------|
-| Students reading on grade level | 22% | 40% |
-| Math proficiency | 8% | 20% |
+### 6. No Application Ships Without Review
+Every package must be reviewed by Bella or Rae before delivery. The portal enforces this: narrative_status goes through requested > drafting > review > approved. Never skip the review step.
 
-Use real data from the school profile (NCES, school report cards). If you don't have baseline data, flag it and ask Bella to get it from the school contact.
+---
 
-### 3. Emotional Hook in the First Paragraph
-The opening must make the reviewer feel something. Lead with the students, not the organization.
+## Writing Quality Requirements
+
+### Opening Line
+Lead with the school's students and specific data. Not the organization, not TDI.
 
 **Wrong:** "Allenwood Elementary is seeking funding for professional development."
+**Right:** "At Allenwood Elementary, 73% of students cannot read on grade level."
 
-**Right:** "At Allenwood Elementary, 73% of students cannot read on grade level. These are not abstract statistics. They represent 400+ children in Temple Hills, Maryland who walk into school every day needing more support than their teachers can currently provide."
+### Character Limits
+Write TO the limit, not under it. Every unused character is a missed opportunity. But never exceed. Show the count: "491 of 500 characters."
 
-### 4. TDI Positioned as Implementation Partner, Not Applicant
-The school is always the applicant. TDI is the partner that makes the grant work. Never position TDI as the primary beneficiary.
+### Tone
+Plain, conversational, confident. A Walmart store manager reads these, not a professor. Short sentences. No jargon. No dashes (--). No academic language.
 
-**Wrong:** "Teachers Deserve It requests $5,000 to provide coaching at Allenwood."
+### Budget
+One clear table. Every line item maps to a TDI contract service. Include percentages. If 100% goes to one item, say "100% of funds."
 
-**Right:** "Allenwood Elementary partners with Teachers Deserve It (TDI), which provides embedded instructional coaching. TDI is not the applicant. Allenwood is."
-
-### 5. Specific Activities, Not Vague Goals
-Never say "professional development" without specifying what kind.
-
-**Wrong:** "Teachers will receive professional development in literacy strategies."
-
-**Right:** "20 hours of one-on-one instructional coaching focused on evidence-based literacy intervention. TDI coaches co-teach, model, and debrief in the same class period, so learning transfers immediately to practice."
-
-### 6. Closing That Connects to Community Impact
-End with why this school, why now, and how the money reaches students directly.
-
-**Wrong:** "Thank you for considering this application."
-
-**Right:** "$1,800 reaches every classroom in the building. Allenwood's teachers are not asking for technology, travel, or administrative overhead. They are asking for books, math tools, and whiteboards."
+### Outcomes
+Quantified with numbers and timeframes. "25 educators will complete a minimum of 6 modules each, totaling 150+ completions." Never "improve student outcomes."
 
 ---
 
-## Grant-Specific Requirements
+## Grant-Specific Form Fields
 
-### Walmart Spark Good ($1,800)
-- Small grant, high approval rate
-- Reviewers want to see EXACTLY what $1,800 buys (line item table is critical)
-- Emphasize local community impact
-- School submits through Deed platform (not TDI)
-- Include NCES ID and EIN
+### Walmart Spark Good (up to $5,000)
+Five sections, each with strict character limits:
+1. **Organization Overview** (500 chars) — School mission, TDI partnership, what this funds
+2. **Community Need** (500 chars) — ATSI designation, proficiency data, why sustained PD matters
+3. **Proposed Use of Funds** (500 chars) — What the money buys (Hub memberships, books, etc.) with percentages
+4. **Expected Outcomes** (500 chars) — Quantified: X educators, Y modules, Z strategy implementations
+5. **Local Connection** (350 chars) — Name the specific Walmart store by address, connect school to that community
 
-### NEA Learning & Leadership ($5,000)
-- Requires NEA member teacher as applicant (not the school admin)
-- Must show individual teacher growth AND school-wide impact
-- Break $5,000 into components (coaching, leadership development, materials)
-- Include two specific PD sessions the teacher will lead for colleagues
+**Evaluated by:** Local Walmart facility manager on Mission Aligned, Builds Trust, Effectiveness
 
-### Title II-A (Federal)
-- District submits through consolidated application
-- Focus on "high-quality professional development" language
-- Reference Every Student Succeeds Act (ESSA) evidence standards
-- TDI coaching qualifies as "sustained, job-embedded PD" under ESSA
-
-### IDEA/CEIS (Special Education)
-- Only for schools with IEP populations
-- Focus on early intervention and prevention
-- Reference Response to Intervention (RTI) or Multi-Tiered System of Supports (MTSS)
+### NEA Learning & Leadership (up to $5,000)
+Written in FIRST PERSON from the NEA member teacher:
+1. **Lead Applicant** — Must be current NEA member (name, member number)
+2. **Activities** — How, when, where will the learning happen? Must occur AFTER notification date
+3. **Need Assessment** — Student need AND professional need by the applicant
+4. **Sustainability & Sharing** — How does this continue? How will knowledge be shared with colleagues?
+5. **Budget** — Upload Word/Excel/PDF with line items. Must be cost-efficient.
 
 ---
 
-## What to Do When You're Missing Information
+## Quality Checklist (Before Pushing Back)
 
-If you don't have school-specific data (enrollment, proficiency rates, demographics), do NOT make up numbers. Instead:
-1. Use what's available from the NCES profile (the portal has auto-fill from NCES)
-2. Flag missing data in an internal note at the top: "[NEEDS FROM SCHOOL: current reading proficiency rate, math proficiency rate]"
-3. Draft the narrative with placeholder brackets: "Only [X]% of students read on grade level"
-4. Push it back as "review" so Bella can fill in the gaps before approving
-
----
-
-## Quality Checklist (self-review before pushing back)
-
-Before setting narrative_status to "review," verify:
-- [ ] Budget table with specific line items and costs
-- [ ] Measurable outcomes with baseline and target numbers
-- [ ] Emotional first paragraph about students, not the organization
-- [ ] TDI positioned as partner, not applicant
-- [ ] Specific activities described (not vague "PD")
-- [ ] Closing connects to community impact
-- [ ] School contact info included (name, email, phone)
-- [ ] NCES ID and EIN included (for Walmart Spark)
-- [ ] No made-up numbers (flag what's missing instead)
+Before setting narrative_status to "review":
+- [ ] Application is a complete package (not just a narrative)
+- [ ] Welcome section with client's first name
+- [ ] School credentials listed upfront
+- [ ] Step-by-step instructions with exact URLs
+- [ ] Every section labeled with EXACT form field name
+- [ ] Character counts shown and verified within limits
+- [ ] Budget funds TDI contract services (not unrelated items)
+- [ ] Grant amount is the maximum allowed
+- [ ] Specific Walmart store named by address (for Spark Good)
+- [ ] Written in first person from NEA member (for NEA grants)
+- [ ] Local school data used (not national statistics)
+- [ ] Printable submission checklist included
+- [ ] Help contact (Bella's email) included
+- [ ] No dashes (--), no jargon, no passive voice
+- [ ] "READY TO SUBMIT" in document title
