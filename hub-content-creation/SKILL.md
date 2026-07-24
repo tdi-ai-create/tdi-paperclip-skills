@@ -119,7 +119,7 @@ Every Quick Win must be:
 1. **Actionable** -- an educator can use it in their classroom, not just read about a concept
 2. **Specific** -- solves a specific problem, not a vague overview
 3. **Short** -- the "quick" in Quick Win means 5 minutes or less to use
-4. **Complete** -- title, description, PDF, tags, community posts. No partial publishes.
+4. **Complete** -- title, description, PDF, category, roles, danielson domains, community posts. No partial publishes. (Thumbnails NOT needed. Cards use colored category dots.)
 5. **Honest about lift** -- if it requires 30 minutes of planning, it is not "Grab & Go"
 
 ---
@@ -232,18 +232,6 @@ POST /api/hub/content-sync
 ```
 Max size: 10MB. Stores at `hub-assets/quick-wins/{id}/{slug}.pdf`
 
-### Upload thumbnail
-```
-POST /api/hub/content-sync
-{
-  "action": "upload_thumbnail",
-  "quick_win_id": "uuid-from-create-draft",
-  "content_base64": "iVBORw0KGgo...",
-  "content_type": "image/png"
-}
-```
-Max size: 2MB. Required before publishing.
-
 ### Publish (Rae only)
 ```
 POST /api/hub/content-sync
@@ -252,7 +240,7 @@ POST /api/hub/content-sync
   "quick_win_id": "uuid"
 }
 ```
-Pre-validates: title, description, category, thumbnail, danielson_domains, roles.
+Pre-validates: title, description, category, danielson_domains, roles. (Thumbnails NOT required. Cards use colored category dots.)
 Triggers auto_seed_community (5 community posts created automatically).
 
 ---
@@ -296,3 +284,5 @@ When assigned a content creation task:
 7. **After publish**, seed 1-2 community posts via `POST /api/hub/community/seed`
 
 Never publish yourself. Never skip the QA gate. Always suggest tags per the quick-win-tagging spec.
+
+**Design note:** Quick Win cards do NOT use thumbnail images. Cards display with colored category dots (Option C design). Do not generate or upload thumbnails. Focus on PDF quality and accurate tagging.
