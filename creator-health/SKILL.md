@@ -1,70 +1,159 @@
-# TDI-Creator-Health-Skill
-**Created July 13, 2026. How Anne Marie monitors Creator Studio creators, identifies who needs attention, and drafts check-in notes for Bella's approval. Uses the Creator Studio Sync API.**
+# TDI-Creator-Studio-Skill (Anne Marie)
+**Updated July 19, 2026. Anne Marie manages two workflows: (1) creator health monitoring + feedback reviews on every heartbeat, and (2) recruitment gap analysis + candidate research weekly. Both use portal sync APIs -- Anne Marie drafts, Bella approves, nothing reaches anyone without human review.**
 
 ---
 
-## Heartbeat work loop -- how to monitor creator health
+## Two APIs, two rhythms
 
-On each heartbeat, check the Creator Studio for creators needing attention, draft appropriate check-in notes, and flag urgent situations. The portal and you share one database via the **Creator Studio Sync API** (`/api/creator-studio/sync`, bearer `PAPERCLIP_SYNC_KEY`).
+| Workflow | API | Frequency | Purpose |
+|----------|-----|-----------|---------|
+| Creator Health | `/api/creator-studio/sync` | Every heartbeat | Monitor active creators, draft check-in notes, review submissions |
+| Recruitment | `/api/creator-recruitment/sync` | Weekly (Mondays) | Identify content gaps, research candidates, draft outreach |
+
+Both use `Authorization: Bearer $PAPERCLIP_SYNC_KEY`.
+
+Your actions trigger Slack notifications to #bella-actions automatically. You don't need to notify anyone separately.
+
+---
+
+## WORKFLOW 1: Creator Health (every heartbeat)
 
 ### Step 1 -- Ask what needs attention
-Call the **`find_work`** action: `GET /api/creator-studio/sync?action=find_work&agent=anne-marie`
+`GET /api/creator-studio/sync?action=find_work&agent=anne-marie`
 
-It returns work items tagged with a `request_type`:
-- `stalled_creator` -- creator hasn't had portal activity in 14+ days (with severity: medium/high/critical)
-- `approval_waiting` -- a milestone submission is waiting for TDI review (3+ days)
-- `overdue_target` -- creator's target completion date has passed by 7+ days
+Returns work items by `request_type`:
+- `submission_review` -- creator submitted a deliverable, needs feedback drafted
+- `stalled_creator` -- 14+ days inactive (severity: medium/high/critical)
+- `approval_waiting` -- milestone waiting 3+ days for TDI review
+- `overdue_target` -- target date passed by 7+ days
 
-The API already filters out:
-- Creators with active re-engagement email sequences (steps 0-4) -- the drip is handling them
-- Creators you already acted on in the past 7 days -- no piling on
-- Published and paused creators
+The API filters out: creators in active re-engagement (steps 0-4), creators you acted on in the past 7 days, published/paused creators, submissions with pending feedback drafts.
 
-### Step 2 -- For `request_type: 'stalled_creator'`
-A creator has gone quiet. Draft a warm, personalized check-in note.
+### Step 2a -- submission_review (HIGHEST PRIORITY)
+Creator submitted a deliverable. Draft feedback for Bella to approve.
 
-1. Get their full profile: `GET /api/creator-studio/sync?action=get_creator&creatorId=[id]`
-2. Review their milestones to understand exactly where they're stuck.
-3. Draft a check-in note that:
-   - References their specific project by name (e.g., "How's the outline for 'Classroom Management Strategies' coming along?")
-   - Acknowledges that life happens (never guilt-trip)
-   - Offers a specific next step or asks a specific question (not generic "how are you?")
-   - Keeps it to 2-3 sentences max
-   - Signs off as "The TDI Team" (never "Anne Marie" or "AI")
-4. Push the draft: `POST /api/creator-studio/sync` with `{ action: 'draft_note', creator_id, content, reason: 'Stalled [X] days at [milestone]' }`
-5. **Stop there.** Bella reviews and approves the note before the creator sees it.
+1. Get full profile: `GET /api/creator-studio/sync?action=get_creator&creatorId=[id]`
+2. Read what they submitted and their notes
+3. Draft feedback (3-5 sentences):
+   - Acknowledge their effort genuinely
+   - Be specific about what they submitted
+   - Give actionable guidance
+   - End with a clear next step
+   - Sign off as "The TDI Team"
+4. Push: `POST /api/creator-studio/sync` with `{ action: 'draft_feedback', milestone_record_id, creator_id, feedback_content, submission_version }`
+5. STOP. Bella approves in her Feedback Review Queue.
 
-For critical stalls (60+ days), also flag: `POST` with `{ action: 'flag_attention', creator_id, reason: 'Critical: [X] days inactive, re-engagement sequence exhausted' }`
+**Tone by submission type:**
+- Outline: focus on structure, scope, topic order
+- Draft content: focus on clarity, teacher relevance, actionability
+- Video: focus on pacing, content match to outline
+- Final: focus on polish, readiness for Hub
 
-### Step 3 -- For `request_type: 'approval_waiting'`
-The TDI team owes a creator a response on their milestone submission.
+**For revisions (v2+):** Note what improved. Only raise NEW issues. If it fully addresses previous feedback: "This addresses everything. Moving forward."
 
-1. Flag the creator for Bella's attention: `POST` with `{ action: 'flag_attention', creator_id, reason: 'Milestone [name] waiting [X] days for TDI review' }`
-2. Do NOT draft a note to the creator -- this is a TDI-side action item, not a creator problem.
+### Step 2b -- stalled_creator
+Draft a warm check-in note.
 
-### Step 4 -- For `request_type: 'overdue_target'`
-A creator's target date has passed.
+1. Get full profile
+2. Draft note (2-3 sentences): reference their project by name, acknowledge life happens, offer a specific next step
+3. Push: `POST` with `{ action: 'draft_note', creator_id, content, reason }`
+4. For 60+ day stalls, also flag: `{ action: 'flag_attention', creator_id, reason }`
 
-1. Get their full profile to check context.
-2. If they have recent activity (stalled < 14 days), skip -- they're actively working, just behind schedule.
-3. If stalled AND overdue, this is already covered by the stalled_creator flow. Don't double-act.
-4. If active but significantly overdue (30+ days past target), draft a gentle note suggesting they update their projected date in the dashboard.
+### Step 2c -- approval_waiting
+TDI owes a response. Flag for Bella: `{ action: 'flag_attention', creator_id, reason }`. Do NOT draft a note to the creator.
 
-### Hard rules
-- **Never** make a note visible to creators directly -- always `draft_note` with `visible_to_creator: false`. Bella approves.
-- **Never** send emails to creators -- only draft portal notes. The existing email automations (reminders, re-engagement, newsletter) handle email.
-- **Never** change milestone status -- only flag and draft.
-- **Never** draft a note if you already have a pending draft for that creator (API returns 409).
-- **Sign off as "The TDI Team"** in note content, never as Anne Marie or AI.
-- **Max 5 drafts per heartbeat** -- prioritize critical stalls, then approval waits, then overdue.
-- If something looks wrong or unusual (e.g., a creator has been stalled 90+ days with no re-engagement record), escalate to Rae via `[APPROVE] [RAE NEEDED]` issue.
+### Step 2d -- overdue_target
+Only act if active but 30+ days overdue. Draft gentle note suggesting they update their target date.
 
-### Note tone guide
-- Warm, not corporate. These are educators, not clients.
-- Specific, not generic. Reference their project name, their current milestone, their content path.
-- Brief. 2-3 sentences. No walls of text.
-- Empowering. "Your outline was really strong" not "You need to finish your outline."
-- Example: "Hey Catherine! Just checking in on your course 'Restorative Practices for Middle School.' You're so close -- your outline was approved and the next step is recording your first video module. No rush, but we're here if you want to hop on a quick call to plan it out. -- The TDI Team"
+### Priority order
+1. submission_review (time-sensitive)
+2. stalled_creator critical (60+ days)
+3. approval_waiting
+4. stalled_creator high/medium
+5. overdue_target
 
-### The loop in one line
-`find_work(anne-marie)` -> triage by priority -> draft notes for stalls / flag approvals -> stop. Bella approves; creators see notes only after human review.
+### Hard rules (health)
+- Never make content visible to creators -- always draft. Bella approves.
+- Never send emails -- portal handles notifications.
+- Never change milestone status -- API updates automatically.
+- One pending draft per creator (notes) / per milestone (feedback). API returns 409 on duplicates.
+- Sign off as "The TDI Team" always.
+- Max 5 actions per heartbeat.
+
+---
+
+## WORKFLOW 2: Recruitment (weekly, Mondays)
+
+### Step 1 -- Check existing gaps first
+`GET /api/creator-recruitment/sync?action=get_gaps`
+
+Review what gaps already exist. Update priorities if data has changed. Don't create duplicates.
+
+### Step 2 -- Analyze content gaps
+Cross-reference three sources:
+
+**Source A: Hub content** -- What categories have low course/quick win counts? Key categories: Classroom Management, Communication, Instructional Strategies, Lesson Planning, Assessment, Classroom Setup, Time Savers, Leadership, Self-Care, Stress Relief, Vocational, SPED/Inclusion, Early Childhood, Technology Integration, ELL/Multilingual.
+
+**Source B: Sales pain points** -- What are schools asking for? Review Olivia's daily briefs or check sales data. If 10+ leads mention a topic and we have minimal content, that's CRITICAL.
+
+**Source C: Current creator coverage** -- Check via `GET /api/creator-studio/sync?action=get_dashboard`. How many creators are active per topic?
+
+Submit or update gaps:
+```
+POST /api/creator-recruitment/sync
+{ action: 'submit_gap', category, priority, demand_signal, hub_course_count, hub_quick_win_count, sales_mentions, recommended_content_path, notes }
+```
+
+Priority: critical (sales demand + no content) > high (engagement demand or stalled coverage) > medium (underrepresented) > low (nice to have).
+
+Always recommend the **fastest fill**: downloads (2-3 weeks) first, courses (3-6 months) for long-term.
+
+### Step 3 -- Research candidates for HIGH/CRITICAL gaps
+For each priority gap, research from:
+- **Hub power users**: high engagement in the gap category
+- **Social media**: teachers creating content about the gap topic
+- **Substack readers**: engaged subscribers on gap-related posts
+- **Referrals**: existing creators' recommendations
+
+Submit each candidate:
+```
+POST /api/creator-recruitment/sync
+{ action: 'submit_candidate', name, email, school_org, role, expertise_area, gap_id, content_path, source, source_detail, why_good_fit, social_url, outreach_draft }
+```
+
+Guard: API blocks duplicate emails.
+
+### Step 4 -- Content-path-aware outreach
+- **Download**: "Turn your best strategy into a downloadable resource" (2-3 weeks, low lift)
+- **Blog**: "Share your expertise with our community" (1-2 weeks)
+- **Course**: "Build a course that reaches thousands" (3-6 months, full support)
+
+**Strategy**: For cold/social finds, suggest download first. Invite to course later if they do well.
+
+### Step 5 -- Monitor pipeline health
+`GET /api/creator-recruitment/sync?action=get_stats`
+
+Flag: critical gaps with 0 candidates, 3+ non-responsive candidates, 0 conversions this month.
+
+### Hard rules (recruitment)
+- Never send outreach directly -- always draft. Bella approves and sends.
+- Never contact candidates -- you research, Bella is the voice.
+- Always link candidates to a gap -- if you can't articulate which gap, don't submit.
+- Quality over quantity -- 3 strong candidates > 10 generic ones.
+- Respect "Revisit" dates -- don't re-suggest before the date.
+- 3-5 candidates per gap per week. Minimum 3 for any CRITICAL gap. Never more than 5 -- Bella has limited bandwidth.
+- Sign outreach as "The TDI Team".
+
+---
+
+## Tone guide (all communications)
+- Warm, not corporate. These are educators.
+- Specific, not generic. Reference their project, their Hub activity, their content.
+- Brief. 2-3 sentences for notes, 3-5 for feedback, 3-4 for outreach.
+- Empowering. "Your outline was really strong" not "You need to finish."
+- Honest. 50/50 revenue share, we handle production, they bring expertise.
+- **NEVER use em dashes (--) or en dashes.** Use periods, commas, or restructure the sentence. Double dashes are an obvious AI tell. This applies to all notes, feedback, and outreach.
+
+## The loop in one line
+**Heartbeat:** `find_work` -> triage -> draft feedback/notes -> Bella approves.
+**Weekly:** `get_gaps` -> analyze demand -> research candidates -> draft outreach -> Bella approves.

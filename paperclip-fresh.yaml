@@ -1,0 +1,624 @@
+schema: "paperclip/v1"
+
+# ============================================================================
+# TDI Paperclip -- Fresh Instance Config
+# Created: July 16, 2026
+#
+# Changes from old instance:
+#   - Erin Pope REMOVED (dead agent, was poisoning escalation system)
+#   - Jim Ford REMOVED (human, does phone outreach outside Paperclip)
+#   - Priya Nair REMOVED (merged into Nora's scope)
+#   - Nora Reeves ADDED (was missing from old YAML, added via UI)
+#   - Assignment-driven agents have heartbeat DISABLED (Izzy, Julie Lynn,
+#     Jasmine, Anne Marie, Simone, Lily, Amara, Sophia)
+#   - Org-chart-only agents (Mel, Sandra, Victor) kept as placeholders
+#   - Dominic Osei, Dr. David Chen deferred to Phase 2
+#   - James Washington deferred to Phase 2
+#   - Agent Health Monitor removed (was custom script, needs rebuild)
+#   - GSV outreach routine removed (expired April 2026)
+#   - GHL sync routine kept but reduced frequency (Kristin email marketing)
+#   - Paperclip version should be PINNED in package.json, not "latest"
+#
+# IMPORTANT: Set Nora Reeves as the default escalation/recovery target
+# in the Paperclip UI after first boot. This is NOT configurable in YAML.
+# ============================================================================
+
+agents:
+
+  # ── TIER 1: Core Operations (heartbeat agents) ──────────────────────────
+
+  nora-reeves:
+    role: "general"
+    icon: "cog"
+    capabilities: "Operations orchestrator -- agent health monitoring, handoff verification, blocked/stale task cleanup, partner health scoring, daily ops standup to Rae"
+    adapter:
+      config:
+        dangerouslySkipPermissions: true
+        maxTurnsPerRun: 100
+        model: "claude-sonnet-4-6"
+      type: "claude_local"
+    runtime:
+      heartbeat:
+        cron: "0 8,12,16 * * 1-5"
+        enabled: true
+    budgetMonthlyCents: 3000
+
+  olivia-smith:
+    role: "general"
+    icon: "mail"
+    capabilities: "Executive communications, scheduling, stakeholder correspondence, daily/weekly briefings, approval batching, efficiency execution layer"
+    adapter:
+      config:
+        dangerouslySkipPermissions: true
+        maxTurnsPerRun: 50
+        mcpServers:
+          gmail:
+            args:
+              - "-y"
+              - "@gongrzhe/server-gmail-autoauth-mcp"
+            command: "npx"
+            env:
+              GOOGLE_CLIENT_ID: "$GOOGLE_OAUTH_CLIENT_ID"
+              GOOGLE_CLIENT_SECRET: "$GOOGLE_OAUTH_CLIENT_SECRET"
+              GOOGLE_REFRESH_TOKEN: "$GOOGLE_OAUTH_REFRESH_TOKEN"
+          google-calendar:
+            args:
+              - "-y"
+              - "@gongrzhe/server-googlecalendar-autoauth-mcp"
+            command: "npx"
+            env:
+              GOOGLE_CLIENT_ID: "$GOOGLE_OAUTH_CLIENT_ID"
+              GOOGLE_CLIENT_SECRET: "$GOOGLE_OAUTH_CLIENT_SECRET"
+              GOOGLE_REFRESH_TOKEN: "$GOOGLE_OAUTH_REFRESH_TOKEN"
+        model: "claude-sonnet-4-6"
+      type: "claude_local"
+    runtime:
+      heartbeat:
+        cron: "0 8 * * *"
+        enabled: true
+    budgetMonthlyCents: 1000
+
+  chris-copypaste:
+    role: "engineer"
+    icon: "code"
+    capabilities: "Engineering leadership, technical delivery, CCP execution via Claude Code"
+    adapter:
+      config:
+        dangerouslySkipPermissions: true
+        maxTurnsPerRun: 50
+        model: "claude-sonnet-4-6"
+      type: "claude_local"
+    runtime:
+      heartbeat:
+        enabled: false
+    budgetMonthlyCents: 2500
+
+  # ── TIER 2: Revenue & Growth ────────────────────────────────────────────
+
+  zara-okonkwo:
+    role: "general"
+    icon: "message-square"
+    capabilities: "Social media strategy, Buffer management across 3 outlets, daily TikTok/IG script delivery, content creation"
+    adapter:
+      config:
+        dangerouslySkipPermissions: true
+        maxTurnsPerRun: 50
+        model: "claude-sonnet-4-6"
+      type: "claude_local"
+    runtime:
+      heartbeat:
+        cron: "0 8 * * 1-5"
+        enabled: true
+    budgetMonthlyCents: 3000
+    inputs:
+      env:
+        BUFFER_ACCESS_TOKEN:
+          description: "Buffer API access token for social scheduling"
+          kind: "secret"
+          default: ""
+          requirement: "optional"
+
+  kristin-williams:
+    role: "general"
+    icon: "sparkles"
+    capabilities: "Content strategy, Substack weekly system, brand voice enforcement, TikTok hook list, investor pitch support"
+    adapter:
+      config:
+        dangerouslySkipPermissions: true
+        maxTurnsPerRun: 50
+        model: "claude-sonnet-4-6"
+      type: "claude_local"
+    runtime:
+      heartbeat:
+        enabled: false
+    budgetMonthlyCents: 1000
+
+  elena-vasquez:
+    role: "general"
+    icon: "target"
+    capabilities: "Revenue strategy, pipeline oversight, sales planning. NOTE: Gmail OAuth not yet configured -- no sending from rae@ inbox until resolved."
+    adapter:
+      config:
+        dangerouslySkipPermissions: true
+        maxTurnsPerRun: 50
+        model: "claude-sonnet-4-6"
+      type: "claude_local"
+    runtime:
+      heartbeat:
+        enabled: false
+    budgetMonthlyCents: 1000
+
+  izzy-reeves:
+    role: "cmo"
+    icon: "sparkles"
+    capabilities: "Content drafting, reel scripts, social post co-drafting with Zara, Substack pre-screening, podcast transcript receipt"
+    adapter:
+      config:
+        dangerouslySkipPermissions: true
+        maxTurnsPerRun: 50
+        model: "claude-sonnet-4-6"
+      type: "claude_local"
+    runtime:
+      heartbeat:
+        enabled: false
+    budgetMonthlyCents: 1000
+
+  # simone-baptiste: REMOVED -- Simone no longer works for TDI (July 2026)
+
+  sophia-castillo:
+    role: "general"
+    icon: "mail"
+    capabilities: "Email routing via sender decision tree -- routes emails between outreach agents and Olivia based on relationship type"
+    adapter:
+      config:
+        dangerouslySkipPermissions: true
+        maxTurnsPerRun: 50
+        model: "claude-sonnet-4-6"
+      type: "claude_local"
+    runtime:
+      heartbeat:
+        enabled: false
+    budgetMonthlyCents: 1000
+
+  # ── TIER 3: Funding ────────────────────────────────────────────────────
+
+  vanessa-thornton:
+    role: "researcher"
+    icon: "file-code"
+    capabilities: "Federal and foundation grant writing, narrative drafting, compliance, reporting"
+    adapter:
+      config:
+        dangerouslySkipPermissions: true
+        maxTurnsPerRun: 50
+        model: "claude-sonnet-4-6"
+      type: "claude_local"
+    runtime:
+      heartbeat:
+        enabled: false
+    budgetMonthlyCents: 1000
+
+  amara-obi:
+    role: "researcher"
+    icon: "file-code"
+    capabilities: "Funder research, funding source discovery, grant opportunity creation"
+    adapter:
+      config:
+        dangerouslySkipPermissions: true
+        maxTurnsPerRun: 50
+        model: "claude-sonnet-4-6"
+      type: "claude_local"
+    runtime:
+      heartbeat:
+        enabled: false
+    budgetMonthlyCents: 1000
+
+  # ── TIER 4: Hub & Creator Studio ───────────────────────────────────────
+
+  dr-jasmine-cole:
+    role: "researcher"
+    icon: "brain"
+    capabilities: "Hub curriculum specialist. Quick Win content creation, PDF generation, tagging per quick-win-tagging spec, community post seeding, engagement check generation"
+    adapter:
+      config:
+        dangerouslySkipPermissions: true
+        maxTurnsPerRun: 50
+        model: "claude-sonnet-4-6"
+      type: "claude_local"
+    runtime:
+      heartbeat:
+        enabled: true
+    budgetMonthlyCents: 3000
+
+  julie-lynn:
+    role: "general"
+    icon: "shield"
+    capabilities: "QA validation -- engagement check density, content gates, agent output quality"
+    adapter:
+      config:
+        dangerouslySkipPermissions: true
+        maxTurnsPerRun: 50
+        model: "claude-sonnet-4-6"
+      type: "claude_local"
+    runtime:
+      heartbeat:
+        enabled: false
+    budgetMonthlyCents: 1000
+
+  anne-marie-schmitt:
+    role: "general"
+    icon: "wand"
+    capabilities: "Creator studio health monitoring, stalled creator detection, check-in note drafting for Bella"
+    adapter:
+      config:
+        dangerouslySkipPermissions: true
+        maxTurnsPerRun: 50
+        model: "claude-sonnet-4-6"
+      type: "claude_local"
+    runtime:
+      heartbeat:
+        enabled: false
+    budgetMonthlyCents: 3000
+
+  lily-chen:
+    role: "designer"
+    icon: "wand"
+    capabilities: "Hub thumbnails, HTML/CSS production, social graphics, rapid turnaround visual design"
+    adapter:
+      config:
+        dangerouslySkipPermissions: true
+        model: "claude-sonnet-4-6"
+      type: "claude_local"
+    runtime:
+      heartbeat:
+        enabled: false
+    budgetMonthlyCents: 1000
+
+  # ── Reference / Org-chart agents ───────────────────────────────────────
+
+  alexis-martinez:
+    role: "designer"
+    icon: "sparkles"
+    capabilities: "Brand voice reference spec"
+    adapter:
+      config:
+        dangerouslySkipPermissions: true
+        maxTurnsPerRun: 50
+        model: "claude-sonnet-4-6"
+      type: "claude_local"
+    runtime:
+      heartbeat:
+        enabled: false
+    budgetMonthlyCents: 1000
+
+  marcus-lee:
+    role: "researcher"
+    icon: "target"
+    capabilities: "Grant positioning reference spec"
+    adapter:
+      config:
+        dangerouslySkipPermissions: true
+        model: "claude-sonnet-4-6"
+      type: "claude_local"
+    runtime:
+      heartbeat:
+        enabled: false
+    budgetMonthlyCents: 1000
+
+  rodrigo-vega:
+    role: "researcher"
+    icon: "database"
+    capabilities: "Data analysis, grants catalog maintenance, reporting"
+    adapter:
+      config:
+        dangerouslySkipPermissions: true
+        maxTurnsPerRun: 50
+        model: "claude-sonnet-4-6"
+      type: "claude_local"
+    runtime:
+      heartbeat:
+        enabled: false
+    budgetMonthlyCents: 1000
+
+  # ── Org-chart placeholders (human or inactive) ─────────────────────────
+
+  mel-martinez:
+    role: "general"
+    icon: "star"
+    capabilities: "Executive assistance, scheduling, administrative support (HUMAN -- org-chart placeholder)"
+    adapter:
+      config:
+        args:
+          - "org-chart-only"
+        command: "echo"
+      type: "process"
+    runtime:
+      heartbeat:
+        enabled: false
+
+  sandra-reyes:
+    role: "general"
+    icon: "gem"
+    capabilities: "Accounts receivable, billing, financial administration (org-chart placeholder)"
+    adapter:
+      config:
+        args:
+          - "org-chart-only"
+        command: "echo"
+      type: "process"
+    runtime:
+      heartbeat:
+        enabled: false
+
+  victor-nash:
+    role: "cfo"
+    icon: "gem"
+    capabilities: "Financial strategy, P&L, budget management, revenue analysis (org-chart placeholder)"
+    adapter:
+      config:
+        args:
+          - "org-chart-only"
+        command: "echo"
+      type: "claude_local"
+    runtime:
+      heartbeat:
+        enabled: false
+
+  omar-garcia:
+    role: "cfo"
+    icon: "gem"
+    capabilities: "Chief Financial Officer -- reports to Rae directly, outside operations scope (HUMAN)"
+    adapter:
+      config:
+        args:
+          - "org-chart-only"
+        command: "echo"
+      type: "process"
+    runtime:
+      heartbeat:
+        enabled: false
+
+  # ── Phase 2 agents (need skill files before activating) ────────────────
+  # These are created but disabled. Activate after defining their work loops.
+
+  holly-scott:
+    role: "general"
+    icon: "heart"
+    capabilities: "Customer success -- PHASE 2: needs role definition and skill file"
+    adapter:
+      config:
+        dangerouslySkipPermissions: true
+        maxTurnsPerRun: 50
+        model: "claude-sonnet-4-6"
+      type: "claude_local"
+    runtime:
+      heartbeat:
+        enabled: false
+    budgetMonthlyCents: 1000
+
+  dr-maya-johnson:
+    role: "designer"
+    icon: "brain"
+    capabilities: "Educator experience design, UX research -- PHASE 2: needs role definition and skill file"
+    adapter:
+      config:
+        dangerouslySkipPermissions: true
+        maxTurnsPerRun: 50
+        model: "claude-sonnet-4-6"
+      type: "claude_local"
+    runtime:
+      heartbeat:
+        enabled: false
+    budgetMonthlyCents: 1000
+
+  sebastian-cole:
+    role: "general"
+    icon: "gem"
+    capabilities: "School district contracts, FERPA compliance, creator agreements -- PHASE 2: needs role definition and skill file"
+    adapter:
+      config:
+        dangerouslySkipPermissions: true
+        maxTurnsPerRun: 50
+        model: "claude-sonnet-4-6"
+      type: "claude_local"
+    runtime:
+      heartbeat:
+        enabled: false
+    budgetMonthlyCents: 1000
+
+  ravi-patel:
+    role: "general"
+    icon: "shield"
+    capabilities: "FERPA compliance, credential management, security audits -- PHASE 2: needs role definition and skill file"
+    adapter:
+      config:
+        dangerouslySkipPermissions: true
+        maxTurnsPerRun: 50
+        model: "claude-sonnet-4-6"
+      type: "claude_local"
+    runtime:
+      heartbeat:
+        enabled: false
+    budgetMonthlyCents: 1000
+
+  dominic-osei:
+    role: "designer"
+    icon: "sparkles"
+    capabilities: "Visual identity, brand systems, investor materials, pitch deck design -- PHASE 2: needs role definition and skill file"
+    adapter:
+      config:
+        dangerouslySkipPermissions: true
+        maxTurnsPerRun: 50
+        model: "claude-sonnet-4-6"
+      type: "claude_local"
+    runtime:
+      heartbeat:
+        enabled: false
+    budgetMonthlyCents: 1000
+
+  dr-david-chen:
+    role: "cto"
+    icon: "circuit-board"
+    capabilities: "Technical architecture, security oversight, infrastructure decisions -- PHASE 2: needs role definition and skill file"
+    adapter:
+      config:
+        dangerouslySkipPermissions: true
+        maxTurnsPerRun: 50
+        model: "claude-sonnet-4-6"
+      type: "claude_local"
+    runtime:
+      heartbeat:
+        enabled: false
+    budgetMonthlyCents: 2500
+
+  james-washington:
+    role: "general"
+    icon: "cog"
+    capabilities: "Operations management -- PHASE 2: needs role definition and skill file"
+    adapter:
+      config:
+        dangerouslySkipPermissions: true
+        maxTurnsPerRun: 50
+        model: "claude-sonnet-4-6"
+      type: "claude_local"
+    runtime:
+      heartbeat:
+        enabled: false
+    budgetMonthlyCents: 1000
+
+  marcus-thompson:
+    role: "pm"
+    icon: "rocket"
+    capabilities: "Product strategy, CCP coordination -- PHASE 2: needs role definition and skill file"
+    adapter:
+      config:
+        dangerouslySkipPermissions: true
+        maxTurnsPerRun: 50
+        model: "claude-sonnet-4-6"
+      type: "claude_local"
+    runtime:
+      heartbeat:
+        enabled: false
+    budgetMonthlyCents: 1000
+
+# ============================================================================
+# PROJECTS
+# ============================================================================
+
+company:
+  feedbackDataSharingEnabled: false
+
+projects:
+  operations:
+    color: "#3b82f6"
+    status: "in_progress"
+  rae-s-approval-queue:
+    color: "#8b5cf6"
+    status: "in_progress"
+  sales:
+    color: "#06b6d4"
+    status: "in_progress"
+  marketing:
+    color: "#22c55e"
+    status: "in_progress"
+  substack-blog:
+    color: "#f97316"
+    status: "in_progress"
+  learning-hub:
+    color: "#eab308"
+    status: "in_progress"
+  creator-studio:
+    color: "#ef4444"
+    status: "in_progress"
+  funding-grants:
+    color: "#8b5cf6"
+    status: "in_progress"
+  podcast-production:
+    color: "#ec4899"
+    status: "in_progress"
+  website-build:
+    color: "#14b8a6"
+    status: "in_progress"
+  leadership-dashboard:
+    color: "#6366f1"
+    status: "in_progress"
+  tdi-operations:
+    color: "#6366f1"
+    status: "in_progress"
+
+# ============================================================================
+# ROUTINES
+# ============================================================================
+
+routines:
+  # GHL write-back for Kristin's email marketing (reduced from every 30 min to hourly)
+  ghl-write-back-sync:
+    concurrencyPolicy: "skip_if_active"
+    triggers:
+      - kind: "schedule"
+        cronExpression: "0 * * * *"
+        timezone: "America/Chicago"
+
+  # Lead fit score monthly recalculation
+  lead-fit-score-monthly-update:
+    priority: "high"
+    triggers:
+      - kind: "schedule"
+        cronExpression: "0 9 1 * *"
+        label: "Monthly on the 1st at 9am CT"
+        timezone: "America/Chicago"
+
+# ============================================================================
+# SIDEBAR (agent display order in Paperclip UI)
+# ============================================================================
+
+sidebar:
+  agents:
+    # Tier 1 -- Core Ops
+    - "nora-reeves"
+    - "olivia-smith"
+    - "chris-copypaste"
+    # Tier 2 -- Revenue & Growth
+    - "kristin-williams"
+    - "zara-okonkwo"
+    - "izzy-reeves"
+    - "elena-vasquez"
+    - "sophia-castillo"
+    # Tier 3 -- Funding
+    - "vanessa-thornton"
+    - "amara-obi"
+    # Tier 4 -- Hub & Creator
+    - "dr-jasmine-cole"
+    - "julie-lynn"
+    - "anne-marie-schmitt"
+    - "lily-chen"
+    # Reference
+    - "alexis-martinez"
+    - "marcus-lee"
+    - "rodrigo-vega"
+    # Org chart / Human
+    - "mel-martinez"
+    - "omar-garcia"
+    - "sandra-reyes"
+    - "victor-nash"
+    # Phase 2 (disabled)
+    - "holly-scott"
+    - "dr-maya-johnson"
+    - "sebastian-cole"
+    - "ravi-patel"
+    - "dominic-osei"
+    - "dr-david-chen"
+    - "james-washington"
+    - "marcus-thompson"
+  projects:
+    - "operations"
+    - "rae-s-approval-queue"
+    - "sales"
+    - "marketing"
+    - "substack-blog"
+    - "learning-hub"
+    - "creator-studio"
+    - "funding-grants"
+    - "podcast-production"
+    - "website-build"
+    - "leadership-dashboard"
+    - "tdi-operations"

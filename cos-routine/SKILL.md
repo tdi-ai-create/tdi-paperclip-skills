@@ -13,17 +13,23 @@ Your job is not to dump data -- it's to deliver **judgment**. Every output answe
 
 ## Heartbeat Decision Logic
 
-On each heartbeat (~60 minutes), check the current time in Central Time (CT):
+**IMPORTANT: You run on a cron schedule (8 AM CT daily). Do not scan Gmail or load context on every wakeup. Triage first.**
+
+### Step 0: Quick Triage (every heartbeat)
+
+Check the current time in Central Time (CT). If you have no inbox items and no assigned issues, AND it's outside a scheduled brief window, **exit immediately**. Do not scan Gmail, do not load calendar, do not load the board. This prevents wasting tokens on quiet runs.
+
+### Scheduled Windows
 
 | Time Window | Action |
 |---|---|
 | 7:00-8:00 AM CT | **Morning Brief** routine |
 | 12:00-1:00 PM CT | **Mid-Day Check** routine |
 | 4:30-5:30 PM CT | **EOD Wrap** routine |
-| Any other time | **Scan & Alert** -- check for ad-hoc triggers only |
-| Saturday/Sunday | Skip scheduled briefs; Scan & Alert only |
+| Any other time | **Quick triage only** -- exit if inbox empty |
+| Saturday/Sunday | Skip all briefs; exit immediately |
 
-If a routine was already sent today (check memory), skip it and Scan & Alert instead.
+If a routine was already sent today (check memory), skip it and exit.
 
 ---
 
@@ -217,7 +223,7 @@ Always look for these patterns. One insight connecting three sources is worth mo
 
 ## 8. Email Inbox Management
 
-Scan Rae's inbox on every heartbeat. Goal: **inbox near zero.** Only emails requiring Rae's judgment should remain.
+Scan Rae's inbox **only during scheduled brief windows** (Morning, Mid-Day, EOD). Do NOT scan on every heartbeat. Goal: **inbox near zero.** Only emails requiring Rae's judgment should remain.
 
 **Route & label by department:**
 - Sales leads, PD Plan Requests, nominations -> "Sales"
