@@ -193,13 +193,13 @@ Auth: `Authorization: Bearer $PAPERCLIP_SYNC_KEY`
 ```
 GET /api/hub/content-sync?action=get_status
 ```
-Returns: `{ total, published, drafts, drafts_missing_thumbnail, drafts_missing_pdf }`
+Returns: `{ total, published, drafts, drafts_missing_pdf, drafts_missing_description }`
 
 ### List draft Quick Wins
 ```
 GET /api/hub/content-sync?action=list_drafts
 ```
-Returns: `{ drafts: [{ id, title, slug, category, has_thumbnail, has_pdf, has_roles, has_danielson }], count }`
+Returns: `{ drafts: [{ id, title, slug, category, has_pdf, has_description, has_tags, has_roles }], count }`
 
 ### Create a new draft
 ```
@@ -209,13 +209,15 @@ POST /api/hub/content-sync
   "title": "Executive Functioning Guide for Paras",
   "slug": "executive-functioning-para-guide",
   "description": "A step-by-step guide for paraprofessionals...",
-  "category": "Classroom Tools",
-  "type": "download",
-  "capacity": "medium",
+  "category": "Instructional Strategies",
+  "capacity": "med",
+  "lift": "med",
   "roles": ["para", "teacher"],
   "danielson_domains": ["3-instruction"],
+  "topic_tags": ["executive-functioning", "inclusion"],
   "access_tier": "professional",
-  "creator_name": "TDI"
+  "resource_type": "pdf",
+  "duration_minutes": 5
 }
 ```
 Valid categories: Lesson Planning, Assessment, Instructional Strategies, Classroom Setup, Classroom Management, Communication, Time Savers, Leadership, Self-Care, Stress Relief, Games, Vocational
@@ -225,22 +227,23 @@ Valid categories: Lesson Planning, Assessment, Instructional Strategies, Classro
 POST /api/hub/content-sync
 {
   "action": "upload_pdf",
-  "quick_win_id": "uuid-from-create-draft",
-  "content_base64": "JVBERi0xLjQK...",
-  "content_type": "application/pdf"
+  "id": "uuid-from-create-draft",
+  "pdf_base64": "JVBERi0xLjQK...",
+  "filename": "executive-functioning-para-guide.pdf"
 }
 ```
-Max size: 10MB. Stores at `hub-assets/quick-wins/{id}/{slug}.pdf`
+Max size: 10MB. Stores at `hub-assets/quick-wins/{id}/{filename}`
 
-### Publish (Rae only)
+### Publish (Rae only, not agents)
 ```
 POST /api/hub/content-sync
 {
   "action": "publish",
-  "quick_win_id": "uuid"
+  "id": "uuid"
 }
 ```
-Pre-validates: title, description, category, danielson_domains, roles. (Thumbnails NOT required. Cards use colored category dots.)
+Pre-validates: title, description, topic_tags (1+), roles (1+), file_url (must have PDF). Thumbnails NOT required (cards use colored category dots).
+Returns `{ success: false, missing: [...] }` if validation fails.
 Triggers auto_seed_community (5 community posts created automatically).
 
 ---

@@ -217,7 +217,11 @@ agents:
   dr-jasmine-cole:
     role: "researcher"
     icon: "brain"
-    capabilities: "Hub curriculum specialist. Quick Win content creation, PDF generation, tagging per quick-win-tagging spec, community post seeding, engagement check generation"
+    capabilities: "Hub curriculum specialist. Quick Win content creation via Content Sync API, PDF generation, tagging per quick-win-tagging spec, community post seeding via Community Seed API. Does NOT do engagement checks (that is Jasmine, a different agent)."
+    skills:
+      - "hub-content-creation"
+      - "quick-win-tagging"
+      - "send-report"
     adapter:
       config:
         dangerouslySkipPermissions: true
