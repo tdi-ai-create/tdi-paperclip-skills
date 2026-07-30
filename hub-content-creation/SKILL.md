@@ -11,25 +11,30 @@ description: >
 ## Pipeline: New Quick Win (Idea to Live)
 
 ```
-Rae requests (topic, audience, category, priority)
+Nora receives task, routes to Dr. Jasmine Cole
     |
-Dr. Jasmine Cole researches, drafts content, creates PDF,
+Dr. Jasmine Cole researches, drafts content,
   suggests tags (category, lift, roles, danielson, topic_tags)
+    |
+Lily designs and polishes the PDF
+  (layout, formatting, visual quality)
     |
 Julie Lynn QA gate (validates tags, quality, completeness,
   verifies against tagging spec)
     |
-Rae reviews, approves, may adjust tags or tier
+Julie Lynn publishes via Content Sync API
+  (POST /api/hub/content-sync, action: publish)
+  DB trigger auto-seeds 5 community posts
     |
-[BUILD] Rae + Claude Code publishes to Hub
-  (upload PDF, insert DB row, set is_published = true)
-    |
-Dr. Jasmine Cole seeds 1-2 community posts within 24 hours
+Dr. Jasmine Cole seeds 1-2 additional community posts within 24 hours
     |
 Nora verifies live, card renders, community exists, notifies team
     |
-Zara creates social content ABOUT the new tool (separate pipeline)
+Marketing gets weekly summary of published content
+  (Izzy and Zara create social on their own schedule)
 ```
+
+No human gate required. Agents run the full pipeline autonomously.
 
 ---
 

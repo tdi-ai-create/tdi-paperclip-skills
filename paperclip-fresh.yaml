@@ -238,7 +238,12 @@ agents:
   julie-lynn:
     role: "general"
     icon: "shield"
-    capabilities: "QA validation -- engagement check density, content gates, agent output quality"
+    capabilities: "QA validation and Hub publishing. Validates engagement check density, content quality, tagging completeness. Publishes Quick Wins via Content Sync API after QA passes."
+    skills:
+      - "hub-content-creation"
+      - "hub-engagement"
+      - "quick-win-tagging"
+      - "send-report"
     adapter:
       config:
         dangerouslySkipPermissions: true
@@ -268,7 +273,9 @@ agents:
   lily-chen:
     role: "designer"
     icon: "wand"
-    capabilities: "Hub thumbnails, HTML/CSS production, social graphics, rapid turnaround visual design"
+    capabilities: "Quick Win PDF design and formatting, course thumbnails, social graphics. Receives content from Dr. Jasmine Cole, designs polished PDFs, hands back for upload. Does NOT write content or publish."
+    skills:
+      - "hub-content-creation"
     adapter:
       config:
         dangerouslySkipPermissions: true
