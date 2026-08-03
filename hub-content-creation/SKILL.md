@@ -288,7 +288,7 @@ When assigned a content creation task:
 3. **Create draft** on the Hub by running this exact curl command (replace the values):
    ```bash
    curl -s -X POST "https://www.teachersdeserveit.com/api/hub/content-sync" \
-     -H "Authorization: Bearer tdi-sync-4c94b4195bb0c6272772e0ea6dd9c318" \
+     -H "Authorization: Bearer $PAPERCLIP_SYNC_KEY" \
      -H "Content-Type: application/json" \
      -d '{
        "action": "create_draft",
@@ -309,21 +309,21 @@ When assigned a content creation task:
    ```bash
    PDF_B64=$(base64 -w0 /path/to/your/file.pdf 2>/dev/null || base64 /path/to/your/file.pdf)
    curl -s -X POST "https://www.teachersdeserveit.com/api/hub/content-sync" \
-     -H "Authorization: Bearer tdi-sync-4c94b4195bb0c6272772e0ea6dd9c318" \
+     -H "Authorization: Bearer $PAPERCLIP_SYNC_KEY" \
      -H "Content-Type: application/json" \
      -d "{\"action\":\"upload_pdf\",\"id\":\"YOUR-QUICK-WIN-ID\",\"pdf_base64\":\"$PDF_B64\",\"filename\":\"your-file.pdf\"}"
    ```
 7. **Verify** the draft appears on the Hub:
    ```bash
    curl -s "https://www.teachersdeserveit.com/api/hub/content-sync?action=get_status" \
-     -H "Authorization: Bearer tdi-sync-4c94b4195bb0c6272772e0ea6dd9c318"
+     -H "Authorization: Bearer $PAPERCLIP_SYNC_KEY"
    ```
 8. **Report to Rae** via send-report with draft summary for review
 9. **Wait** for Julie Lynn QA and Rae approval
 10. **After publish**, seed 1-2 community posts:
     ```bash
     curl -s -X POST "https://www.teachersdeserveit.com/api/hub/community/seed" \
-      -H "Authorization: Bearer tdi-sync-4c94b4195bb0c6272772e0ea6dd9c318" \
+      -H "Authorization: Bearer $PAPERCLIP_SYNC_KEY" \
       -H "Content-Type: application/json" \
       -d '{"quick_win_id":"YOUR-ID","user_id":"c3c1c7a9-e084-47b8-9945-15423f154ca9","contribution_type":"tried_it","body":"Post body from a teacher perspective"}'
     ```
