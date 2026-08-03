@@ -99,6 +99,8 @@ agents:
     role: "general"
     icon: "message-square"
     capabilities: "Social media strategy, Buffer management across 3 outlets, daily TikTok/IG script delivery, content creation"
+    skills:
+      - "brand-voice"
     adapter:
       config:
         dangerouslySkipPermissions: true
@@ -122,6 +124,8 @@ agents:
     role: "general"
     icon: "sparkles"
     capabilities: "Content strategy, Substack weekly system, brand voice enforcement, TikTok hook list, investor pitch support"
+    skills:
+      - "brand-voice"
     adapter:
       config:
         dangerouslySkipPermissions: true
@@ -152,6 +156,8 @@ agents:
     role: "cmo"
     icon: "sparkles"
     capabilities: "Content drafting, reel scripts, social post co-drafting with Zara, Substack pre-screening, podcast transcript receipt"
+    skills:
+      - "brand-voice"
     adapter:
       config:
         dangerouslySkipPermissions: true
@@ -186,6 +192,9 @@ agents:
     role: "researcher"
     icon: "file-code"
     capabilities: "Federal and foundation grant writing, narrative drafting, compliance, reporting"
+    skills:
+      - "brand-voice"
+      - "grant-writing-standards"
     adapter:
       config:
         dangerouslySkipPermissions: true
@@ -219,6 +228,7 @@ agents:
     icon: "brain"
     capabilities: "Hub curriculum specialist. Quick Win content creation via Content Sync API, PDF generation, tagging per quick-win-tagging spec, community post seeding. Also generates engagement checks for course lessons via Engagement Sync API."
     skills:
+      - "brand-voice"
       - "hub-content-creation"
       - "hub-engagement"
       - "quick-win-tagging"
@@ -292,6 +302,8 @@ agents:
     role: "designer"
     icon: "sparkles"
     capabilities: "Brand voice reference spec"
+    skills:
+      - "brand-voice"
     adapter:
       config:
         dangerouslySkipPermissions: true
