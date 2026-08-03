@@ -285,11 +285,27 @@ When assigned a content creation task:
 
 1. **Research** the topic using web search and existing Hub content
 2. **Draft** the Quick Win content (title, description, PDF body)
-3. **Create draft** via `POST /api/hub/content-sync` with `action: create_draft`
-4. **Upload PDF** via `POST /api/hub/content-sync` with `action: upload_pdf`
-5. **Report to Rae** via send-report with draft summary for review
-6. **Wait** for Julie Lynn QA and Rae approval
-7. **After publish**, seed 1-2 community posts via `POST /api/hub/community/seed`
+3. **Create draft** by running this command in your terminal:
+   ```bash
+   tdi-create-draft "Title Here" "slug-here" "Description here" "Category" '["tag1","tag2"]' '["teacher","para"]' '["3-instruction"]' "LOW" "professional"
+   ```
+4. **Save the ID** from the response. You need it for the next step.
+5. **Generate the PDF** and save it to a file
+6. **Upload PDF** by running:
+   ```bash
+   tdi-upload-pdf <id-from-step-4> /path/to/your/file.pdf
+   ```
+7. **Report to Rae** via send-report with draft summary for review
+8. **Wait** for Julie Lynn QA and Rae approval
+9. **After publish**, seed 1-2 community posts:
+   ```bash
+   tdi-seed-community <quick-win-id> c3c1c7a9-e084-47b8-9945-15423f154ca9 tried_it "Post body from a teacher perspective"
+   tdi-seed-community <quick-win-id> 7a502d0a-29e9-4490-b330-ea1131311d44 adapted_it "Post body from a para perspective"
+   ```
+
+**CRITICAL:** Steps 3 and 6 MUST happen. If you skip them, the content exists only inside Paperclip and educators cannot access it. Always run `tdi-status` after uploading to verify the draft appears.
+
+To check pipeline status at any time: `tdi-status`
 
 Never publish yourself. Never skip the QA gate. Always suggest tags per the quick-win-tagging spec.
 
