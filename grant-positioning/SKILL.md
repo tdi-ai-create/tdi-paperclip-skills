@@ -113,7 +113,7 @@ Illinois Regional Offices of Education (ROEs) are a key entry point for grant-fu
 
 ---
 
-## Flags for Erin Pope
+## Escalation Flags
 
 - Grant application ready to submit → routes to Rae's approval queue before submission, always
 - Federal application missing board-ready justification paragraph → send back before submission

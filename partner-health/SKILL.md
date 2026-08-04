@@ -5,7 +5,7 @@
 
 ## Purpose
 
-This skill document defines how TDI evaluates the health of active school partnerships. Use it to assess renewal risk, flag at-risk partners, and determine when to escalate to Rae. Erin Pope uses this document to calibrate every partner health flag before it reaches Priya's queue.
+This skill document defines how TDI evaluates the health of active school partnerships. Use it to assess renewal risk, flag at-risk partners, and determine when to escalate to Rae. Use this document to calibrate every partner health flag before it reaches Priya's queue.
 
 ---
 
@@ -132,9 +132,9 @@ This is a same-day call to Rae. Not a Slack message, not an email — a call. Pr
 
 ---
 
-## What Priya needs from Erin Pope in her task queue
+## What Priya needs in her task queue
 
-When Erin Pope flags a partner for Priya's queue, the task should include:
+When a partner is flagged for Priya's queue, the task should include:
 - Partner name and current health score
 - Which specific signals dropped and by how much
 - Days until renewal
@@ -146,7 +146,7 @@ Priya should never have to go looking for this context. It should be in the task
 
 ---
 
-## Flags for Erin Pope
+## Escalation Flags
 
 - Any partner score dropping into At Risk → same-day flag to Priya AND surface on Rae's dashboard
 - Any partner score dropping into Critical → immediate route to Rae's approval queue

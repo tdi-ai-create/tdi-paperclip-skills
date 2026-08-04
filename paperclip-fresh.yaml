@@ -5,12 +5,13 @@ schema: "paperclip/v1"
 # Created: July 16, 2026
 #
 # Changes from old instance:
-#   - Erin Pope REMOVED (dead agent, was poisoning escalation system)
+#   - Erin Pope REMOVED (no longer with TDI)
+#   - Simone REMOVED (no longer with TDI)
 #   - Jim Ford REMOVED (human, does phone outreach outside Paperclip)
 #   - Priya Nair REMOVED (merged into Nora's scope)
 #   - Nora Reeves ADDED (was missing from old YAML, added via UI)
 #   - Assignment-driven agents have heartbeat DISABLED (Izzy, Julie Lynn,
-#     Jasmine, Anne Marie, Simone, Lily, Amara, Sophia)
+#     Jasmine, Anne Marie, Lily, Amara, Sophia)
 #   - Org-chart-only agents (Mel, Sandra, Victor) kept as placeholders
 #   - Dominic Osei, Dr. David Chen deferred to Phase 2
 #   - James Washington deferred to Phase 2

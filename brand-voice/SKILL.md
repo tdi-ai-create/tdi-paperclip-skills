@@ -106,7 +106,7 @@ True Cold assumes nothing. It earns every sentence. The opening must establish t
 
 ---
 
-## Flags for Erin Pope
+## Quality Flags
 
 - Any outreach email that opens with a feature or product description before establishing the reader's problem → send back to Alexis for rewrite
 - Any social post using words from the never-use list → send back before approval

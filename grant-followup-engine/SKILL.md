@@ -5,7 +5,7 @@
 
 ## Purpose
 
-This skill gives TDI agents the *process* behind the grant funding workflow's three newest systems: the follow-up engine that keeps every funding pursuit moving, the escalation gate that ensures a named submitter and backup exist, and the fit-scoring router that prioritizes (never rejects) interested schools. Erin Pope's existing spec holds the *policy* ("catch it, escalate it"); this skill defines the *cadence, rungs, and mechanics* that execute it — pending confirmation of ownership with Rae/Erin.
+This skill gives TDI agents the *process* behind the grant funding workflow's three newest systems: the follow-up engine that keeps every funding pursuit moving, the escalation gate that ensures a named submitter and backup exist, and the fit-scoring router that prioritizes (never rejects) interested schools. This skill defines the *cadence, rungs, and mechanics* that execute the policy. Nora owns orchestration; Rae owns final decisions.
 
 Use it when tracking grant action items, deciding when/whom to escalate a stalled funding task, or scoring an inbound/outbound school lead.
 
@@ -73,11 +73,11 @@ Every interested school is served. The four-factor score sets priority and appro
 
 ---
 
-## Flags for Erin Pope (extends existing escalation policy)
-- Funding action item hits red (overdue) with no submitter response → escalation ladder engages automatically; surface to Erin if it reaches the Rae rung
+## Escalation Flags
+- Funding action item hits red (overdue) with no submitter response → escalation ladder engages automatically; surface to Nora if it reaches the Rae rung
 - A pursuit missing a named backup → flag: the gate is not satisfied, submission work should not proceed without it
 - District-routed submission stuck (reached district but not funder) → flag as stalled, escalate to admin sponsor, do not mark submitted
 - Low-funding-score school → do not deprioritize; trigger the creative funding hunt (local/community sourcing — route to whoever owns local/foundation grant research)
 
 ## Maintenance
-New skill as of July 9, 2026. Owner TBD (suggest Erin Pope as policy owner + whoever maintains the admin portal follow-up engine as process owner). Cross-references: grants-catalog (source library + A/B/C/D strategy), grant-positioning (narrative standards), partner-health (scoring-model structure analog).
+New skill as of July 9, 2026. Nora owns orchestration policy. Cross-references: grants-catalog (source library + A/B/C/D strategy), grant-positioning (narrative standards), partner-health (scoring-model structure analog).

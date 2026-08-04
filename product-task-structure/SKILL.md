@@ -5,7 +5,7 @@
 
 ## Purpose
 
-This skill document explains how TDI's product function works so Erin Pope can coordinate product work accurately. TDI does not run traditional sprint ceremonies. The build process is CCP-driven. Every feature ships through a defined loop. Erin Pope uses this document to track product work, surface blockers, and protect Rae's time on product decisions.
+This skill document explains how TDI's product function works. TDI does not run traditional sprint ceremonies. The build process is CCP-driven. Every feature ships through a defined loop. Use this document to track product work, surface blockers, and protect Rae's time on product decisions.
 
 ---
 
@@ -158,10 +158,10 @@ Desi is available in the Sustain phase of the Blueprint. Priced at $30,000 flat 
 
 ---
 
-## Flags for Erin Pope
+## Escalation Flags
 
 - Desi milestone delay identified → same-day surface to Marcus T. and Rae
 - Any Desi scope question → immediate route to Rae's approval queue
 - CCP stuck without movement for 48+ hours → flag to Marcus T.
-- Build area approaching July 1 with significant incomplete work → flag to Rae
+- Build area approaching deadline with significant incomplete work → flag to Rae
 - Partner dashboard change pending → confirm Priya is in the loop before Chris deploys

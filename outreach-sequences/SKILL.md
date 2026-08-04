@@ -182,7 +182,7 @@ St. Charles CUSD 303 in Kane County is the fiscal agent for a 5-district SpEd co
 
 ---
 
-## Flags for Erin Pope
+## Escalation Flags
 
 - Warm reply received → immediate escalation to Kristin's task queue
 - Jim's outreach numbers down two weeks running → flag to Kristin, ask for diagnosis

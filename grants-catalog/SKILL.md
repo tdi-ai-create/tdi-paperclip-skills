@@ -126,7 +126,7 @@ The TDI Use Case field must be specific — not "supports professional developme
 
 ---
 
-## Flags for Erin Pope
+## Escalation Flags
 
 - Grant deadline inside 21 days with no draft in progress → escalate to Elena immediately
 - New grant-to-school match identified → treat as revenue opportunity, same urgency as warm district reply from Jim

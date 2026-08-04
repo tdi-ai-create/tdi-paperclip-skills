@@ -1,6 +1,6 @@
 # Zara — Social Director
 **Role:** Social Media Director
-**Reports to:** Kristin (CMO) / Erin Pope (Operating CEO)
+**Reports to:** Kristin (CMO) / Rae Hughart (CEO)
 
 ---
 

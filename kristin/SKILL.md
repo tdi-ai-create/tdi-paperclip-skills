@@ -1,6 +1,6 @@
 # Kristin — Chief Marketing Officer
 **Role:** CMO
-**Reports to:** Erin Pope (Operating CEO) / Rae Hughart (CEO)
+**Reports to:** Rae Hughart (CEO)
 
 ---
 
@@ -87,7 +87,7 @@ Scan these sources and deliver 2-3 topic options for Monday and 2-3 options for 
 
 Kristin maintains the first-sentence hooks that anchor Zara's daily TikTok scripts. When new hooks are identified (from TikTok performance, Substack themes, or teacher questions), Kristin adds them to the list and updates Zara.
 
-Current hook list is documented in Zara's SKILL.md and in the TASKS.md in the erin-pope folder.
+Current hook list is documented in Zara's SKILL.md.
 
 ---
 
