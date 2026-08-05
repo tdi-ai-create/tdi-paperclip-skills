@@ -156,7 +156,7 @@ agents:
   izzy-reeves:
     role: "cmo"
     icon: "sparkles"
-    capabilities: "Content drafting, reel scripts, social post co-drafting with Zara, Substack pre-screening, podcast transcript receipt"
+    capabilities: "Content drafting, reel scripts, social post co-drafting with Zara, Substack pre-screening"
     skills:
       - "brand-voice"
     adapter:
@@ -558,9 +558,6 @@ projects:
   funding-grants:
     color: "#8b5cf6"
     status: "in_progress"
-  podcast-production:
-    color: "#ec4899"
-    status: "in_progress"
   website-build:
     color: "#14b8a6"
     status: "in_progress"
@@ -644,7 +641,6 @@ sidebar:
     - "learning-hub"
     - "creator-studio"
     - "funding-grants"
-    - "podcast-production"
     - "website-build"
     - "leadership-dashboard"
     - "tdi-operations"

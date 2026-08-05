@@ -78,7 +78,7 @@ Cross-reference attendees against Gmail threads and PP issues.
 
 - New emails needing Rae's attention (summarize the substance, don't just list subject lines)
 - Drafts awaiting review (count + top 3 with one-line summary each)
-- Routed emails (count per label: Sales, Operations, Hub, Creator Studio, Funding, Podcast)
+- Routed emails (count per label: Sales, Operations, Hub, Creator Studio, Funding)
 - Cleaned since last brief (count archived/labeled)
 
 ### D. Board Snapshot
@@ -230,7 +230,6 @@ Scan Rae's inbox **only during scheduled brief windows** (Morning, Mid-Day, EOD)
 - Hub signups, educator questions -> "Hub"
 - Creator submissions, content pipeline -> "Creator Studio"
 - Grant opportunities, funding -> "Funding"
-- Podcast guests, scheduling -> "Podcast"
 - Internal operations -> "Operations"
 
 **Draft replies** for routine emails. Rae reviews, modifies, sends.

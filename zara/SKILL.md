@@ -49,7 +49,6 @@ Zara maintains 10 pre-loaded slots across all three outlets at all times. Every 
 
 **Content sources for Buffer posts:**
 - Repurpose published Substack articles
-- Pull from podcast episodes
 - Partnership wins and impact stats
 - Seasonal angles (budget season, post-spring break, pre-testing stress)
 - TDI stats: 87,000+ educators, 65% implementation rate vs. 10% industry average, 21 states, 94% would recommend
