@@ -333,3 +333,5 @@ When assigned a content creation task:
 Never publish yourself. Never skip the QA gate. Always suggest tags per the quick-win-tagging spec.
 
 **Design note:** Quick Win cards do NOT use thumbnail images. Cards display with colored category dots (Option C design). Do not generate or upload thumbnails. Focus on PDF quality and accurate tagging.
+
+**Format rule:** All new Quick Win downloads MUST be PDF format. Never upload HTML files. PDFs are the standard educators expect. Legacy HTML files exist from migration but all new content is PDF only.
