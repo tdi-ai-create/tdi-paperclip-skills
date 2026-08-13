@@ -1,15 +1,36 @@
 # TDI-Creator-Recruitment-Skill
-**Created July 19, 2026. How Anne Marie identifies content gaps, researches potential creators, drafts outreach, and manages the recruitment pipeline. Uses the Creator Recruitment Sync API.**
+**Updated August 13, 2026. How Anne Marie supplements the portal's automated creator recruitment. Uses the Creator Recruitment Sync API.**
 
 ---
 
-## Weekly work loop: how to recruit creators
+## Read this first: the portal now runs the weekly loop
 
-Every Monday (or when assigned a recruitment task), read the gap board, research candidates, and draft outreach. The portal and you share one database via the **Creator Recruitment Sync API** (`/api/creator-recruitment/sync`, bearer `PAPERCLIP_SYNC_KEY`).
+Two scheduled jobs in the TDI portal do the baseline work every week without you:
 
-### Step 1: Read the gap board, do not rebuild it
+| Job | When | What it does |
+|---|---|---|
+| Gap scan | Monday | Counts published Hub courses and quick wins per category and writes the content gaps |
+| Research | Monday | Tops the week up to 5 candidates, researches real educators, and posts Bella a copy and paste ready digest |
 
-**The portal now detects content gaps on its own.** A scheduled Hub content scan runs every Monday, counts published courses and quick wins in every category, and writes the gaps itself. You no longer inventory the Hub.
+**This is deliberate.** The recruitment pipeline sat empty for a month because it depended on you having a trigger, and you do not have one. Your heartbeat is off, no routine is scheduled, and the portal cannot assign you a task while the Paperclip board token is dead. The baseline had to run somewhere it could be guaranteed.
+
+**So do not duplicate the weekly loop.** Do not inventory the Hub, and do not do a blanket candidate search just because it is Monday. Your job is now the work the scheduled job cannot do:
+
+- **Demand the catalog cannot see.** The scan counts content. It cannot hear a sales call. Submit gaps for what schools are actually asking for.
+- **Referrals and warm leads.** An existing creator mentions a colleague; a partner principal recommends a teacher. The scheduled search will never find these.
+- **Filling a specific gap on request.** When Bella or Rae asks for candidates in a named area, research it properly and submit.
+- **Depth on a candidate already in the pipeline.** More evidence, a better draft, a second contact route.
+
+Before submitting anything, check what is already there so you do not duplicate the scheduled run:
+```
+GET /api/creator-recruitment/sync?action=get_pipeline&stage=suggested
+```
+
+## Working loop
+
+The portal and you share one database via the **Creator Recruitment Sync API** (`/api/creator-recruitment/sync`, bearer `PAPERCLIP_SYNC_KEY`).
+
+### Step 1: Read the gap board, never rebuild it
 
 Start every cycle by reading what is already on the board:
 ```
@@ -116,6 +137,8 @@ Watch for:
 - **Never contact candidates.** You research and recommend. Bella is the human voice.
 - **Always link candidates to a gap.** Pull the `gap_id` from `get_gaps` and pass it. If you can't articulate which gap they fill, don't submit them.
 - **Never claim engagement you did not verify.** Every specific in `why_good_fit` and `source_detail` must be something you actually read.
+- **Never invent a person or an email address.** `social_url` must be a real URL you opened. Leave `email` null unless you read the address in a source. The portal rejects candidates that fail this, so an invented one is wasted work as well as a bad look.
+- **Do not run the weekly search.** The scheduled job owns the baseline. Submit against a specific request, a referral, or demand the catalog cannot see.
 - **Quality over quantity.** 3 strong candidates with specific evidence > 10 generic suggestions.
 - **Respect the "Revisit" status.** If Bella marks someone as "revisit with date," don't re-suggest them before that date.
 - **Max 5 candidates per gap per week.** Don't flood the pipeline. Bella has limited bandwidth.
