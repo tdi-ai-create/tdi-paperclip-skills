@@ -45,7 +45,7 @@ An opportunity Bella asked you to draft a grant narrative for. Note: `find_work`
    ```
    Returns: `{ "success": true, "url": "https://docs.google.com/document/d/.../edit", "title": "...", "folder": "TDI Grant Narratives" }`
 
-   The URL is what Bella and Julie will open, read, and edit. The Doc is the living document.
+   The URL is what Julie and Bella will open, read, and edit. The Doc is the living document.
 
 4. **Push BOTH the URL and the text back** via `update_narrative`:
    ```
@@ -55,7 +55,7 @@ An opportunity Bella asked you to draft a grant narrative for. Note: `find_work`
    {
      "action": "update_narrative",
      "opportunityId": "<opportunity id from find_work>",
-     "narrativeStatus": "review",
+     "narrativeStatus": "qa_review",
      "narrativeUrl": "<url from save-to-drive>",
      "narrativeContent": "<plain text of the narrative>",
      "note": "Draft created as Google Doc by <agent name>"
@@ -66,7 +66,17 @@ An opportunity Bella asked you to draft a grant narrative for. Note: `find_work`
 
 5. **If save-to-drive fails:** still call `update_narrative` with `narrativeContent` alone (no `narrativeUrl`). Include the error in the note: `"Draft saved as text only — Google Doc creation failed: <error>"`. A failed Doc must never mean a lost draft. The portal can still display the inline text, and the Doc can be created later.
 
-6. **Stop there.** Do NOT mark it `ready` or send anything to a client. Bella's approval (setting `ready`) and any client send are human-gated in the portal. You draft; Bella approves.
+6. **Stop there.** Setting `qa_review` hands it to Julie, who scores it and files
+   a verdict. If she passes it, it goes to Bella for approval. If she fails it,
+   it comes back to you with her notes in `redraft_guidance` — read those before
+   redrafting, and fix what she actually flagged.
+
+   Do NOT mark it `approval`, `escalated`, or `ready`, and do NOT send anything
+   to a client. Do not create a "review this draft" action item or draft a
+   "ready for review" email either: the portal raises QA work on its own, and
+   duplicating it fills the queue with items nobody owns.
+
+   You draft; Julie scores; Bella approves and sends.
 
 ### Step 3 — For `request_type: 'research_funders'`
 Bella asked you (Amara) to find more funding sources for a pursuit.
@@ -77,11 +87,11 @@ Bella asked you (Amara) to find more funding sources for a pursuit.
 5. **Stop there.** New opportunities surface in the portal for Bella to review and pursue. You find and propose; humans decide.
 
 ### Hard rules (same as the rest of the system)
-- **Never** advance a narrative to `ready` — that's Bella's approval.
+- **Never** advance a narrative past `qa_review`. `approval`, `escalated`, and `ready` are set by Julie's verdict or by a person.
 - **Never** send anything to a client — all client sends are human-gated in the portal (allowlist + window-gate + Bella's click).
 - **Respect the window-gate:** don't draft for a closed/unknown window (find_work enforces this for you); when researching, default new sources to `window_status='unknown'`.
 - **Always push both URL and text** when creating a Google Doc draft. If the Doc fails, push text alone — never lose the draft.
 - Escalations, approvals, and policy questions → route to Rae (per your existing escalation instructions).
 
 ### The loop in one line
-`find_work(you)` → mark in-progress → draft to spec → create Google Doc → push URL + text back → mark review → stop. Bella approves; humans send.
+`find_work(you)` → mark in-progress → draft to spec → create Google Doc → push URL + text back → set `qa_review` → stop. Julie scores; Bella approves; humans send.

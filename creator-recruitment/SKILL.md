@@ -1,53 +1,75 @@
 # TDI-Creator-Recruitment-Skill
-**Created July 19, 2026. How Anne Marie identifies content gaps, researches potential creators, drafts outreach, and manages the recruitment pipeline. Uses the Creator Recruitment Sync API.**
+**Updated August 13, 2026. How Anne Marie supplements the portal's automated creator recruitment. Uses the Creator Recruitment Sync API.**
 
 ---
 
-## Weekly work loop: how to recruit creators
+## Read this first: the portal now runs the weekly loop
 
-Every Monday (or when assigned a recruitment task), identify content gaps, research candidates, and draft outreach. The portal and you share one database via the **Creator Recruitment Sync API** (`/api/creator-recruitment/sync`, bearer `PAPERCLIP_SYNC_KEY`).
+Two scheduled jobs in the TDI portal do the baseline work every week without you:
 
-### Step 1: Analyze content gaps
+| Job | When | What it does |
+|---|---|---|
+| Gap scan | Monday | Counts published Hub courses and quick wins per category and writes the content gaps |
+| Research | Monday | Tops the week up to 5 candidates, researches real educators, and posts Bella a copy and paste ready digest |
 
-Cross-reference three data sources to identify where the Hub needs content:
+**This is deliberate.** The recruitment pipeline sat empty for a month because it depended on you having a trigger, and you do not have one. Your heartbeat is off, no routine is scheduled, and the portal cannot assign you a task while the Paperclip board token is dead. The baseline had to run somewhere it could be guaranteed.
 
-**Source A: Hub content inventory**
-Check what courses and quick wins exist. Categories with low content are gaps. Use your knowledge of the Hub structure. Key categories are:
-- Classroom Management, Communication, Instructional Strategies, Lesson Planning, Assessment, Classroom Setup, Time Savers, Leadership, Self-Care, Stress Relief, Vocational, SPED/Inclusion, Early Childhood, Technology Integration, ELL/Multilingual
+**So do not duplicate the weekly loop.** Do not inventory the Hub, and do not do a blanket candidate search just because it is Monday. Your job is now the work the scheduled job cannot do:
 
-**Source B: Sales pipeline pain points**
-Check the sales CRM via the Funding Sync API or by reviewing Olivia's daily briefs. What are schools asking for? If 10+ leads mention "paraprofessional training" and we have minimal content there, that's a CRITICAL gap.
+- **Demand the catalog cannot see.** The scan counts content. It cannot hear a sales call. Submit gaps for what schools are actually asking for.
+- **Referrals and warm leads.** An existing creator mentions a colleague; a partner principal recommends a teacher. The scheduled search will never find these.
+- **Filling a specific gap on request.** When Bella or Rae asks for candidates in a named area, research it properly and submit.
+- **Depth on a candidate already in the pipeline.** More evidence, a better draft, a second contact route.
 
-**Source C: Current creator coverage**
-Check which topics active creators are already covering via the Creator Studio Sync API (`find_work` or `get_dashboard`). If a gap has 0 creators and 0 content, it's higher priority than one where someone is already working on it.
+Before submitting anything, check what is already there so you do not duplicate the scheduled run:
+```
+GET /api/creator-recruitment/sync?action=get_pipeline&stage=suggested
+```
 
-**Submit each gap:**
+## Working loop
+
+The portal and you share one database via the **Creator Recruitment Sync API** (`/api/creator-recruitment/sync`, bearer `PAPERCLIP_SYNC_KEY`).
+
+### Step 1: Read the gap board, never rebuild it
+
+Start every cycle by reading what is already on the board:
+```
+GET /api/creator-recruitment/sync?action=get_gaps
+```
+
+Each gap returns `category`, `priority`, `hub_course_count`, `hub_quick_win_count`, `candidate_count`, and `identified_by`. Work the CRITICAL and HIGH gaps that have `candidate_count: 0` first. Those are the ones nobody is covering.
+
+**Only submit a gap the scan cannot see.** The scan counts catalog content. It cannot hear a sales call. If schools keep asking for something, that is real demand the counts will never show:
 ```
 POST /api/creator-recruitment/sync
 {
   "action": "submit_gap",
-  "category": "Assessment",
+  "category": "Paraprofessional Support",
   "priority": "critical",
-  "demand_signal": "12 active sales leads mention assessment PD. Hub has 6 quick wins but 0 courses.",
-  "hub_course_count": 0,
-  "hub_quick_win_count": 6,
+  "demand_signal": "12 active sales leads asked for para training in the last 30 days.",
   "sales_mentions": 12,
   "recommended_content_path": "download",
-  "notes": "Fastest fill: recruit for 2-3 assessment downloads while searching for a course creator."
+  "notes": "Demand heard on sales calls. Not visible in the catalog counts."
 }
 ```
 
-Priority levels:
-- **critical**: Active sales leads asking for this AND no courses/creators covering it
-- **high**: Hub users engage heavily in this category but content is thin, OR creator covering this is stalled 30+ days
-- **medium**: Category underrepresented but no immediate sales pressure
-- **low**: Nice to have, not urgent
+Never resubmit a category that already has an active gap, and never change the priority on a gap where `identified_by` is `admin`, because a human set that on purpose.
+
+Priority levels (the scan applies these; use the same scale for demand you submit):
+- **critical**: No courses at all, or leads asking with nothing to point them at
+- **high**: Content is thin and no creator is covering it
+- **medium**: Category underrepresented but no immediate pressure
+- **low**: Healthy. The scan retires these on its own.
 
 ### Step 2: Research candidates
 
+This is the part only you can do, and it is now the main job. The portal finds the gaps. You find the people.
+
+**Do not treat Hub community response counts as evidence of expertise.** Those tables contain seeded community content attributed to real accounts, so a high response count does not mean that person wrote those posts. Course completion data is also too new to lean on. If you cite Hub engagement as a reason, cite something you verified directly and say what you checked.
+
 For each HIGH or CRITICAL gap, research potential creators from these sources:
 
-**Hub power users:** Look for teachers who completed many lessons in the gap category, have streaks, earned field notes. These are warm, because they already know TDI.
+**Hub members:** Warm, because they already know TDI. Read what a person actually wrote and judge the substance of it. Do not rank people by response count or streak length, for the reason above. If you cannot point to specific writing of theirs that shows expertise in the gap topic, they are not a candidate yet.
 
 **Social media:** Search for teachers creating content about the gap topic on TikTok, Instagram, LinkedIn. Look for: follower count, content quality, teaching expertise, engagement.
 
@@ -68,8 +90,8 @@ POST /api/creator-recruitment/sync
   "gap_id": "[UUID of the Assessment gap]",
   "content_path": "download",
   "source": "hub_user",
-  "source_detail": "Completed 12 lessons, 45-day streak, left detailed responses on assessment content",
-  "why_good_fit": "Deep assessment expertise demonstrated through Hub engagement. Completed every assessment quick win with thoughtful responses. Active on Instagram with assessment content.",
+  "source_detail": "Wrote a detailed adaptation on the exit ticket quick win explaining how she reworked it for a co-taught room. Verified by reading the post.",
+  "why_good_fit": "Her writing on assessment shows she has actually built and revised these systems, not just used them. Runs an assessment focused Instagram with original templates.",
   "social_url": "https://instagram.com/mariachen_teach",
   "outreach_draft": "Hi Maria, I noticed you've been crushing it on the Hub, especially the assessment content. Your responses show real depth and expertise. We're looking for educators like you to create downloadable resources for our community. It's a 50/50 revenue share, we handle all the production, and you'd be helping thousands of teachers. Would you be open to a quick conversation?\n\nThe TDI Team"
 }
@@ -111,8 +133,12 @@ Watch for:
 ### Hard rules
 
 - **Never send outreach directly.** Always draft via `submit_candidate` with `outreach_draft`. Bella approves and sends.
+- **Always include an `outreach_draft`.** Submitting a candidate without one leaves Bella a blank page. The draft is the work product, not the name.
 - **Never contact candidates.** You research and recommend. Bella is the human voice.
-- **Always link candidates to a gap.** Every candidate should be tied to a content gap. If you can't articulate which gap they fill, don't submit them.
+- **Always link candidates to a gap.** Pull the `gap_id` from `get_gaps` and pass it. If you can't articulate which gap they fill, don't submit them.
+- **Never claim engagement you did not verify.** Every specific in `why_good_fit` and `source_detail` must be something you actually read.
+- **Never invent a person or an email address.** `social_url` must be a real URL you opened. Leave `email` null unless you read the address in a source. The portal rejects candidates that fail this, so an invented one is wasted work as well as a bad look.
+- **Do not run the weekly search.** The scheduled job owns the baseline. Submit against a specific request, a referral, or demand the catalog cannot see.
 - **Quality over quantity.** 3 strong candidates with specific evidence > 10 generic suggestions.
 - **Respect the "Revisit" status.** If Bella marks someone as "revisit with date," don't re-suggest them before that date.
 - **Max 5 candidates per gap per week.** Don't flood the pipeline. Bella has limited bandwidth.
@@ -128,4 +154,6 @@ Watch for:
 
 ### The loop in one line
 
-`Analyze gaps (Hub + sales + creators)` -> `research candidates for HIGH/CRITICAL gaps` -> `draft outreach with evidence` -> `submit to portal for Bella` -> `monitor pipeline health` -> repeat weekly.
+`Read the gap board` -> `research candidates for the CRITICAL and HIGH gaps with no candidates` -> `draft outreach with verified evidence` -> `submit to portal, which pings Bella in #bella-actions` -> `monitor pipeline health` -> repeat weekly.
+
+Submitting a candidate is the handoff. The portal posts it to Bella with a link straight to the approval screen, so once you submit, the work is with her and not with you.

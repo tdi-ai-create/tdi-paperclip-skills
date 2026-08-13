@@ -249,11 +249,13 @@ agents:
   julie-lynn:
     role: "general"
     icon: "shield"
-    capabilities: "QA validation and Hub publishing. Validates engagement check density, content quality, tagging completeness. Publishes Quick Wins via Content Sync API after QA passes."
+    capabilities: "QA validation, Hub publishing, and grant narrative QA. Validates engagement check density, content quality, tagging completeness. Publishes Quick Wins via Content Sync API after QA passes. Scores grant narratives against the 20-point quality gate and files verdicts via the Funding Sync API."
     skills:
       - "hub-content-creation"
       - "hub-engagement"
       - "quick-win-tagging"
+      - "grant-writing-standards"
+      - "grants-catalog"
       - "send-report"
     adapter:
       config:
@@ -262,9 +264,15 @@ agents:
         model: "claude-sonnet-4-6"
       type: "claude_local"
     runtime:
+      # Heartbeat ON as of Aug 13 2026. Grant narrative QA is pull-based: she
+      # calls find_work and picks up anything awaiting a verdict. With this
+      # disabled she never calls it, and narratives sit in qa_review forever
+      # while the portal reports them as agent work. That is exactly how five
+      # Saunemin narratives went quiet for over a week.
       heartbeat:
-        enabled: false
-    budgetMonthlyCents: 1000
+        cron: "0 9,13,17 * * 1-5"
+        enabled: true
+    budgetMonthlyCents: 3000
 
   anne-marie-schmitt:
     role: "general"
