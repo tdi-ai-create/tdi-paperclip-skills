@@ -3,16 +3,16 @@
 
 ---
 
-## Weekly work loop -- how to recruit creators
+## Weekly work loop: how to recruit creators
 
 Every Monday (or when assigned a recruitment task), identify content gaps, research candidates, and draft outreach. The portal and you share one database via the **Creator Recruitment Sync API** (`/api/creator-recruitment/sync`, bearer `PAPERCLIP_SYNC_KEY`).
 
-### Step 1 -- Analyze content gaps
+### Step 1: Analyze content gaps
 
 Cross-reference three data sources to identify where the Hub needs content:
 
 **Source A: Hub content inventory**
-Check what courses and quick wins exist. Categories with low content are gaps. Use your knowledge of the Hub structure -- key categories are:
+Check what courses and quick wins exist. Categories with low content are gaps. Use your knowledge of the Hub structure. Key categories are:
 - Classroom Management, Communication, Instructional Strategies, Lesson Planning, Assessment, Classroom Setup, Time Savers, Leadership, Self-Care, Stress Relief, Vocational, SPED/Inclusion, Early Childhood, Technology Integration, ELL/Multilingual
 
 **Source B: Sales pipeline pain points**
@@ -43,11 +43,11 @@ Priority levels:
 - **medium**: Category underrepresented but no immediate sales pressure
 - **low**: Nice to have, not urgent
 
-### Step 2 -- Research candidates
+### Step 2: Research candidates
 
 For each HIGH or CRITICAL gap, research potential creators from these sources:
 
-**Hub power users:** Look for teachers who completed many lessons in the gap category, have streaks, earned field notes. These are warm -- they already know TDI.
+**Hub power users:** Look for teachers who completed many lessons in the gap category, have streaks, earned field notes. These are warm, because they already know TDI.
 
 **Social media:** Search for teachers creating content about the gap topic on TikTok, Instagram, LinkedIn. Look for: follower count, content quality, teaching expertise, engagement.
 
@@ -71,11 +71,11 @@ POST /api/creator-recruitment/sync
   "source_detail": "Completed 12 lessons, 45-day streak, left detailed responses on assessment content",
   "why_good_fit": "Deep assessment expertise demonstrated through Hub engagement. Completed every assessment quick win with thoughtful responses. Active on Instagram with assessment content.",
   "social_url": "https://instagram.com/mariachen_teach",
-  "outreach_draft": "Hi Maria -- I noticed you've been crushing it on the Hub, especially the assessment content. Your responses show real depth and expertise. We're looking for educators like you to create downloadable resources for our community. It's a 50/50 revenue share, we handle all the production, and you'd be helping thousands of teachers. Would you be open to a quick conversation? -- The TDI Team"
+  "outreach_draft": "Hi Maria, I noticed you've been crushing it on the Hub, especially the assessment content. Your responses show real depth and expertise. We're looking for educators like you to create downloadable resources for our community. It's a 50/50 revenue share, we handle all the production, and you'd be helping thousands of teachers. Would you be open to a quick conversation?\n\nThe TDI Team"
 }
 ```
 
-### Step 3 -- Content-path-aware outreach
+### Step 3: Content-path-aware outreach
 
 Tailor the pitch based on what you're recruiting for:
 
@@ -96,7 +96,7 @@ Tailor the pitch based on what you're recruiting for:
 
 **Strategy:** For cold outreach or social media finds, suggest a download first. If they do well, invite them to create a course. Don't lead with a 6-month commitment to someone who's never heard of TDI.
 
-### Step 4 -- Monitor pipeline health
+### Step 4: Monitor pipeline health
 
 Check the pipeline stats periodically:
 ```
@@ -116,7 +116,7 @@ Watch for:
 - **Quality over quantity.** 3 strong candidates with specific evidence > 10 generic suggestions.
 - **Respect the "Revisit" status.** If Bella marks someone as "revisit with date," don't re-suggest them before that date.
 - **Max 5 candidates per gap per week.** Don't flood the pipeline. Bella has limited bandwidth.
-- **Sign outreach as "The TDI Team"** -- never as Anne Marie or AI.
+- **Sign outreach as "The TDI Team"** on its own line, never as Anne Marie or AI. No dash before the name.
 
 ### Outreach tone guide
 
