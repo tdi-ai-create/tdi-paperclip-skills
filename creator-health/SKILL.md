@@ -46,22 +46,74 @@ The API filters out: creators in active re-engagement (steps 0-4), creators you 
 ### Step 2a: submission_review (HIGHEST PRIORITY)
 Creator submitted a deliverable. Draft feedback for Bella to approve.
 
+**Step 0, before anything else: open what they submitted.**
+
+The submitted link is not always on the milestone. Check, in this order:
+1. The milestone's `submitted_value`
+2. The creator's notes for a System entry reading `[Auto] Link submitted for ...`
+
+`submitted_value` is empty for most content milestones, so an empty field is not
+evidence that nothing was submitted. If you cannot find or open a document, say
+exactly that in your flag and stop. Do not draft feedback on content you have not
+read, and never conclude a creator submitted nothing without checking the notes.
+
+Then:
+
 1. Get full profile: `GET /api/creator-studio/sync?action=get_creator&creatorId=[id]`
 2. Read what they submitted and their notes
-3. Draft feedback (3-5 sentences):
-   - Acknowledge their effort genuinely
-   - Be specific about what they submitted
-   - Give actionable guidance
-   - End with a clear next step
-   - Sign off as "The TDI Team" on its own line, with no dash before it
-4. Push: `POST /api/creator-studio/sync` with `{ action: 'draft_feedback', milestone_record_id, creator_id, feedback_content, submission_version }`
-5. STOP. Bella approves in her Feedback Review Queue.
+3. Score it against the rubric below
+4. Draft feedback (3-5 sentences) shaped by that score
+5. Push: `POST /api/creator-studio/sync` with `{ action: 'draft_feedback', milestone_record_id, creator_id, feedback_content, submission_version }`
+6. STOP. Bella approves in her Feedback Review Queue.
 
-**Tone by submission type:**
-- Outline: focus on structure, scope, topic order
-- Draft content: focus on clarity, teacher relevance, actionability
-- Video: focus on pacing, content match to outline
-- Final: focus on polish, readiness for Hub
+### The content rubric
+
+Score every submission on five dimensions. You are not grading a teacher. You are
+checking whether this will actually help the educator who downloads it.
+
+| # | Dimension | Ready | Needs work |
+|---|---|---|---|
+| 1 | **Specific** | Names a real situation, grade band, or moment. "The five minutes after a fight in the hallway." | Abstract advice that could apply to any job. "Build strong relationships." |
+| 2 | **Usable Monday** | A teacher can do this tomorrow with no budget, no new tool, and no admin permission. | Requires a program purchase, a schedule change, or buy-in they do not have. |
+| 3 | **Earns the time** | Every paragraph gives something. Respects that the reader is tired. | Long warm-up, restates the problem the reader already lives, pads to length. |
+| 4 | **Credible** | Grounded in what the creator has actually done in a room with students. | Theory with no practice behind it, or claims presented as research with no source. |
+| 5 | **Complete for format** | Has what its format requires (see table below). | Missing the piece that makes the format work. |
+
+#### What "complete" means per format
+
+| Format | Must have |
+|---|---|
+| Outline | Scope, section order, and who it is for. A reader should predict the finished piece. |
+| Blog or draft content | A specific opening situation, one clear idea, and something the reader does at the end. |
+| Download or resource | The thing itself, usable as-is. Not a description of a thing. |
+| Video | Pacing that matches the outline, and audio a person can listen to for the full length. |
+| Final | All of the above, plus nothing left for us to fix before it reaches the Hub. |
+
+#### The decision
+
+| Result | When | What you draft |
+|---|---|---|
+| **Ready** | All five dimensions land | Say so plainly, name the strongest specific thing, confirm the next step. |
+| **Small revision** | One or two dimensions need work | Name at most two changes. Be concrete about what to change and where. |
+| **Rework** | Three or more need work, or dimension 1 or 2 fails outright | Name the single biggest gap, offer one concrete example of what would fix it, and offer a call. Do not list every problem. |
+
+**Never send more than two asks in one round.** A creator who receives six pieces
+of feedback stops. If there are more than two real problems, that is a call, not a
+comment, and you should flag it for a human instead.
+
+#### Red flags worth naming
+
+- Sentences that sound like a machine wrote them. Generic openers, "in today's classroom", padding.
+- Advice that assumes resources most teachers do not have.
+- Claims about research, data, or outcomes with nothing behind them.
+- Content that would embarrass the creator if a colleague at their school read it.
+
+#### What you do not do
+
+- Do not rewrite their work for them. Point at the gap, let them close it.
+- Do not correct grammar or style unless it blocks understanding.
+- Do not raise something you already raised on a previous version.
+- Do not soften a real problem into vagueness. "This section needs a specific example" helps. "Maybe consider expanding a bit" does not.
 
 **For revisions (v2+):** Note what improved. Only raise NEW issues. If it fully addresses previous feedback: "This addresses everything. Moving forward."
 
@@ -74,7 +126,25 @@ Draft a warm check-in note.
 4. For 60+ day stalls, also flag: `{ action: 'flag_attention', creator_id, reason }`
 
 ### Step 2c: approval_waiting
-TDI owes a response. Flag for Bella: `{ action: 'flag_attention', creator_id, reason }`. Do NOT draft a note to the creator.
+TDI owes a response. Do NOT draft a note to the creator.
+
+**First, check whether there is a document behind it.** Look at the milestone's
+`submitted_value`, then the creator's notes for a System entry reading
+`[Auto] Link submitted for ...`.
+
+- **A document exists.** Treat it as a submission_review and follow Step 2a,
+  including the rubric. Someone sent us work and is waiting on a read. Put the
+  link in your feedback so the approver can open it in one click.
+- **No document anywhere.** Flag it: `{ action: 'flag_attention', creator_id, reason }`.
+  Write the reason so a human can act without re-investigating: what step, how many
+  days, and that you checked both places and found no artifact.
+
+This split exists because it failed. Two creators submitted blog drafts in March
+2026, the links were written only to their notes and never to `submitted_value`,
+so every system that checked the milestone concluded nothing had been submitted.
+Both items surfaced here as approval_waiting rather than as a review, got flagged
+into a queue nobody was working, and sat unread for five months while their portal
+told them we were editing their post. Always ask where the file is.
 
 ### Step 2d: overdue_target
 Only act if active but 30+ days overdue. Draft gentle note suggesting they update their target date.
