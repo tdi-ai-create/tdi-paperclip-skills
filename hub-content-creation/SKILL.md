@@ -23,7 +23,10 @@ Julie Lynn QA gate (validates tags, quality, completeness,
   verifies against tagging spec)
     |
 Julie Lynn publishes via Content Sync API
-  (POST /api/hub/content-sync, action: publish)
+  (POST /api/hub/content-sync, action: schedule)
+  next open weekday slot, max 3 a day
+    |
+The daily job publishes it on its day
   DB trigger auto-seeds 5 community posts
     |
 Dr. Jasmine Cole seeds 1-2 additional community posts within 24 hours

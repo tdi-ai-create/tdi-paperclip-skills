@@ -200,18 +200,21 @@ Content-Type: application/json
 ```
 Only works on unpublished drafts.
 
-### Publish (Rae only, not you)
+### Schedule (Julie's step, not yours)
 ```
 POST /api/hub/content-sync
 Content-Type: application/json
 
 {
-  "action": "publish",
-  "id": "uuid"
+  "action": "schedule",
+  "id": "uuid",
+  "scheduled_by": "julie-lynn"
 }
 ```
-Pre-validates: title, description, topic_tags (1+), roles (1+), file_url (must have PDF).
-Auto-seeds 5 community posts via database trigger.
+Changed 7 September 2026. Takes the next open weekday slot, at most three Quick Wins a
+day. A daily job publishes it on the morning its day arrives, which is when the trigger
+auto-seeds the 5 community posts. Pre-validates the same fields `publish` did: title,
+description, topic_tags (1+), roles (1+), file_url (must have PDF).
 
 ---
 
