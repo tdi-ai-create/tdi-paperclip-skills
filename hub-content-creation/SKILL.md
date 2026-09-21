@@ -53,12 +53,13 @@ No human gate required. Agents run the full pipeline autonomously.
 - Does NOT create social media posts (that is Izzy/Zara)
 
 ### Julie Lynn (QA Engineer) -- QUALITY GATE
-- Validates every piece of content against the tagging spec before publish
-- Checks: title, description, category, lift, roles, danielson, topic_tags, access_tier
-- Verifies content is actionable (classroom-ready, not just theory)
+- Reviews every piece against `docs/hub-content-standard.md` (rubric v2). That is the standard, and the bullets below are only its mechanical half
+- Validates the tagging spec: title, description, category, lift, roles, danielson, topic_tags, access_tier
 - Checks spelling, grammar, PDF formatting
-- Routes failed content back to Dr. Jasmine Cole with specific issues
+- Stamps `rubric-v2` in `qa_notes` on every review. Without the stamp an audit cannot tell a real review from one waved through under the old structural gate
+- Routes failed content back to Dr. Jasmine Cole with the specific thing a teacher cannot do, not a score
 - Does NOT write or edit content
+- Does NOT schedule anything on the four highest-risk student-support topics, or the first item in a new category, while its board approval is undecided. A pending approval does not stop the scheduled publisher on its own, see TEA-737
 
 ### Maya (Educator UX) -- UX AUDITOR
 - Audits how content displays on the Hub (cards, filters, detail pages)
@@ -123,12 +124,40 @@ No human gate required. Agents run the full pipeline autonomously.
 
 ## Content Quality Standards
 
-Every Quick Win must be:
-1. **Actionable** -- an educator can use it in their classroom, not just read about a concept
-2. **Specific** -- solves a specific problem, not a vague overview
-3. **Short** -- the "quick" in Quick Win means 5 minutes or less to use
-4. **Complete** -- title, description, PDF, category, roles, danielson domains, community posts. No partial publishes. (Thumbnails NOT needed. Cards use colored category dots.)
-5. **Honest about lift** -- if it requires 30 minutes of planning, it is not "Grab & Go"
+**The standard is `docs/hub-content-standard.md` in the tdi-website repo, "Hub
+content standard (rubric v2)". Read it there, not here.**
+
+This section used to restate a five-point version of the bar. It drifted. By
+21 September 2026 it was missing the specificity test, the school-appropriate
+test, the weight test, the usability bar, the distinct-actions rule and the
+local support page, while Julie's QA notes were correctly stamping `rubric-v2`
+against the canonical document. Two standards existed and only one was real.
+Do not restate the rubric here again. A copy is a second source, and a second
+source is the same drift.
+
+What belongs in this file, because it is operational rather than a quality bar:
+
+- **Complete before publish** means title, description, PDF, category, roles,
+  danielson domains and community posts. No partial publishes. Thumbnails are
+  not needed, cards use coloured category dots.
+- **Honest about lift.** If it takes 30 minutes of planning it is not Grab and
+  Go. The rubric assumes this field is truthful and does not check it for you.
+- **Games, quizzes and activities are out of scope for rubric v2**, by Rae's
+  call on 1 September 2026. They need their own bar and do not have one yet.
+  Confirm `quick_win_type` before scoring anything.
+
+Two rules from the rubric are worth knowing by name here, because they change
+what gets written rather than only what gets checked:
+
+- **Distinct actions.** A situation card carries at least three actions that
+  answer genuinely different situations, counted by situation rather than by
+  bullet. Procedure cards, where the steps must happen in order, are exempt and
+  judged on whether every step gives the teacher something to do and whether the
+  card runs all the way to the handoff.
+- **Local support page.** The four highest-risk student-support topics, self-harm,
+  suicidal ideation, abuse disclosure and grief, each carry a second page of
+  school and district specific blanks. Labelled fields and questions only, never
+  more guidance from us.
 
 ---
 
